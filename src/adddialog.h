@@ -12,8 +12,6 @@ class AddDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddDialog(QWidget *parent = nullptr);
-
     AddDialog(QWidget *parent, int resourcesSize);
 
     ~AddDialog();
@@ -22,7 +20,7 @@ public:
 
     int order;
 
-    bool isAdded = false;
+    bool added = false;
 
 private slots:
     void on_addButton_clicked();

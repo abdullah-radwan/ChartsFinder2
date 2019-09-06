@@ -1,5 +1,16 @@
 <RCC>
     <qresource prefix="/">
-        <file>../res/icon.ico</file>
+        <file>../res/icons/icon.svg</file>
+		<file>../res/icons/add.svg</file>
+		<file>../res/icons/remove.svg</file>
+		<file>../res/icons/up.svg</file>
+		<file>../res/icons/down.svg</file>
+		<file>../res/icons/change.svg</file>
+		<file>../res/icons/download.svg</file>
+		<file>../res/icons/reset.svg</file>
+		<file>../res/icons/settings.svg</file>
+		<file>../res/icons/update.svg</file>
+		<file>../res/icons/about.svg</file>
+		<file>../res/icons/cancel.svg</file>
     </qresource>
 </RCC>

@@ -3,18 +3,22 @@
 
 #include <QSettings>
 #include <QUrl>
+#include <QRect>
 
 class Config
 {
 public:
-    struct configStruct
-    {
-        QString path;
-        bool openCharts, removeFiles;
-        QList<QStringList> resources;
-    };
 
-    Config();
+    typedef struct
+    {
+        QString language;
+        QRect mainWinGeo;
+        QRect settingsWinGeo;
+        QString path;
+        bool openCharts, removeFiles, checkUpdates;
+        int updatePeriod;
+        QList<QStringList> resources;
+    } configStruct;
 
     static configStruct readConfig();
 

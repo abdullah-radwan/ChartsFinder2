@@ -13,8 +13,6 @@ class SettingsWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit SettingsWindow(QWidget *parent = nullptr);
-
     SettingsWindow(QWidget *parent, Config::configStruct config);
 
     ~SettingsWindow();
@@ -23,9 +21,6 @@ public:
 
 signals:
     void closed();
-
-protected:
-    void showEvent(QShowEvent *ev);
 
 private slots:
     void on_pathButton_clicked();
@@ -40,10 +35,20 @@ private slots:
 
     void on_resetButton_clicked();
 
+    void onLanguageChange();
+
 private:
     void closeEvent(QCloseEvent *bar);
 
     void setResources();
+
+    void addResource(int row, QString url, QString type, bool selectRow = true);
+
+    void setUpdateCombo();
+
+    void setLangCombo();
+
+    int getUpdatePeriod();
 
     Ui::SettingsWindow *ui;
 };

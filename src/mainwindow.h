@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include "downloader.h"
+#include <UpdateController>
+#include <QTranslator>
+#include <QLocale>
 
 namespace Ui {
 class MainWindow;
@@ -26,16 +29,29 @@ private slots:
 
     void on_actionAbout_triggered();
 
-    void on_actionDonate_triggered();
-
     void on_icaoEdit_returnPressed();
+
+    void on_actionCheck_for_updates_triggered();
 
 private:
     Ui::MainWindow *ui;
 
     Downloader* downloader;
 
+    QtAutoUpdater::UpdateController* controller;
+
     Config::configStruct config;
+
+    QTranslator* qtTranslator;
+    QTranslator* translator;
+    QTranslator* autoUpdaterTranslator;
+    QLocale locale;
+
+    void setTranslator();
+    void setDownloader();
+    void checkForUpdates();
+
+    void closeEvent(QCloseEvent *bar);
 };
 
 #endif // MAINWINDOW_H

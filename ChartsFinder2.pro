@@ -6,6 +6,4 @@
 
 TEMPLATE = subdirs
 CONFIG += ordered
-SUBDIRS = lib/QGumboParser \
-        src
-
+SUBDIRS = lib src

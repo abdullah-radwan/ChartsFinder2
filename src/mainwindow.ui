@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>306</width>
-    <height>217</height>
+    <width>362</width>
+    <height>233</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,10 @@
   </property>
   <property name="windowIcon">
    <iconset resource="res.qrc">
-    <normaloff>:/res/icon.ico</normaloff>:/res/icon.ico</iconset>
+    <normaloff>:/res/icons/icon.svg</normaloff>:/res/icons/icon.svg</iconset>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonTextBesideIcon</enum>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -25,7 +28,10 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="res.qrc">:/res/icon.ico</pixmap>
+       <pixmap resource="res.qrc">:/res/icons/icon.svg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -35,7 +41,7 @@
     <item>
      <widget class="QLabel" name="nameLabel">
       <property name="text">
-       <string>Charts Finder</string>
+       <string notr="true">Charts Finder</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -43,18 +49,18 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="icaoLayout">
       <item>
        <widget class="QLabel" name="enterLabel">
         <property name="text">
-         <string>Enter ICAO codes: </string>
+         <string>Enter ICAO codes:</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLineEdit" name="icaoEdit">
         <property name="placeholderText">
-         <string>Seperate with space</string>
+         <string>Seperate with spaces</string>
         </property>
        </widget>
       </item>
@@ -85,6 +91,10 @@
       <property name="text">
        <string>Get charts</string>
       </property>
+      <property name="icon">
+       <iconset resource="res.qrc">
+        <normaloff>:/res/icons/download.svg</normaloff>:/res/icons/download.svg</iconset>
+      </property>
      </widget>
     </item>
     <item>
@@ -107,22 +117,37 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionSettings"/>
+   <addaction name="actionCheck_for_updates"/>
    <addaction name="actionAbout"/>
-   <addaction name="actionDonate"/>
   </widget>
   <action name="actionSettings">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/res/icons/settings.svg</normaloff>:/res/icons/settings.svg</iconset>
+   </property>
    <property name="text">
     <string>Settings</string>
    </property>
   </action>
   <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/res/icons/about.svg</normaloff>:/res/icons/about.svg</iconset>
+   </property>
    <property name="text">
     <string>About</string>
    </property>
   </action>
-  <action name="actionDonate">
+  <action name="actionCheck_for_updates">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/res/icons/update.svg</normaloff>:/res/icons/update.svg</iconset>
+   </property>
    <property name="text">
-    <string>Donate</string>
+    <string>Check for updates</string>
    </property>
   </action>
  </widget>
