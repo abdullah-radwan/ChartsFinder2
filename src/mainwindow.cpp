@@ -135,8 +135,8 @@ void MainWindow::setDownloader()
         ui->progressBar->hide();
     });
 
-    connect(downloader, &Downloader::processFinished, [&](){
-
+    connect(downloader, &Downloader::processFinished, [&]()
+    {
         ui->progressBar->hide();
         ui->cancelButton->hide();
         ui->getButton->show();

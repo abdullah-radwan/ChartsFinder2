@@ -2,16 +2,13 @@
 #include <QDir>
 #include <QDate>
 #include <QStandardPaths>
+#include <QApplication>
 #include <QDebug>
 
 Config::configStruct Config::readConfig()
 { 
-    // Set the config file path on different systems
-#ifdef Q_OS_WIN
-    QSettings settings("config.cfg", QSettings::IniFormat);
-#else
-    QSettings settings(".config/chartsfinder2/config.cfg", QSettings::IniFormat);
-#endif
+    // This should be %appdata%/ChartsFinder2/config.cfg on Windows, and ~/.local/share/ChartsFinder2/config.cfg on Linux
+    QSettings settings(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/config.cfg", QSettings::IniFormat);
 
     qDebug() << "Reading config";
 
@@ -68,11 +65,8 @@ Config::configStruct Config::readConfig()
 
 void Config::writeConfig(Config::configStruct config)
 {
-#ifdef Q_OS_WIN
-    QSettings settings("config.cfg", QSettings::IniFormat);
-#else
-    QSettings settings(".config/chartsfinder2/config.cfg", QSettings::IniFormat);
-#endif
+    // This should be %appdata%/ChartsFinder2/config.cfg on Windows, and ~/.local/share/ChartsFinder2/config.cfg on Linux
+    QSettings settings(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/config.cfg", QSettings::IniFormat);
 
     qDebug() << "Writing config";
 

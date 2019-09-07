@@ -4,6 +4,7 @@
 #include <QSettings>
 #include <QUrl>
 #include <QRect>
+#include <QStandardPaths>
 
 class Config
 {

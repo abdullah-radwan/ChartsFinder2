@@ -85,7 +85,7 @@ void* gumbo_vector_pop(
 int gumbo_vector_index_of(GumboVector* vector, const void* element) {
   for (unsigned int i = 0; i < vector->length; ++i) {
     if (vector->data[i] == element) {
-      return i;
+      return (int) i;
     }
   }
   return -1;
@@ -93,7 +93,6 @@ int gumbo_vector_index_of(GumboVector* vector, const void* element) {
 
 void gumbo_vector_insert_at(struct GumboInternalParser* parser, void* element,
     unsigned int index, GumboVector* vector) {
-  assert(index >= 0);
   assert(index <= vector->length);
   enlarge_vector_if_full(parser, vector);
   ++vector->length;
@@ -108,12 +107,11 @@ void gumbo_vector_remove(
   if (index == -1) {
     return;
   }
-  gumbo_vector_remove_at(parser, index, vector);
+  gumbo_vector_remove_at(parser, (unsigned int) index, vector);
 }
 
 void* gumbo_vector_remove_at(struct GumboInternalParser* parser,
     unsigned int index, GumboVector* vector) {
-  assert(index >= 0);
   assert(index < vector->length);
   void* result = vector->data[index];
   memmove(&vector->data[index], &vector->data[index + 1],

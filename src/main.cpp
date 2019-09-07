@@ -22,13 +22,14 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    // This should be %appdata%/ChartsFinder2 on Windows, and ~/.local/share/ChartsFinder2 on Linux
+    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+
+    // Make it (this will fail if it's already created)
+    QDir(dataPath).mkpath(".");
+
     // Set the log file path
-#ifdef Q_OS_WIN
-    logFile = new QFile("log.txt");
-#else
-    if(!QDir(".config/chartsfinder2").exists()) QDir(".config/chartsfinder2").mkpath(".");
-    logFile = new QFile(".config/chartsfinder2/log.txt");
-#endif
+    logFile = new QFile(dataPath + "/log.txt");
 
     // Open the log file
     logFile->open(QFile::WriteOnly | QFile::Text);

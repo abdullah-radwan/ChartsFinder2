@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 2.1 - 2019-09-01
+## 2.1 - 2019-09-07
 ### Added
 - Installer.
 - Auto updater.
@@ -19,7 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Resource removal message displays the wrong resource, and crashes on the last one.
 ### Changed
-- Linux config and log file path to ~/.config/chartsfinder2 instead of ~/.chartsfinder2.
+- Windows config and log file path to %APPDATA%\ChartsFinder2 instead of in the program folder.
+- Linux config and log file path to ~/.local/share/ChartsFinder2 instead of ~/.chartsfinder2.
 - Reformat the code.
 - Use cURL instead of QNetwork.
 ### Removed
