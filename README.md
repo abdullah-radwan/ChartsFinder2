@@ -7,8 +7,7 @@ Read the manual for full explanation.
 Go to releases and download the latest release. The pre-compiled versions are provided for Windows and Linux.
 
 ## Build
-You need to have Qt 5, [QtAutoUpdater](https://github.com/Skycoder42/QtAutoUpdater), and cURL installed for Linux.
-On Windows, the library is included precompiled.
+You need to have Qt 5, [QtAutoUpdater](https://github.com/Skycoder42/QtAutoUpdater), and cURL installed for Linux. On Windows, the library is included precompiled.
 
 ```
 git clone https://github.com/abdullah-radwan/ChartsFinder2.git ~/ChartsFinder2
@@ -35,7 +34,10 @@ Then run the following command: `binarycreator -c config/config.xml -p packages 
 
 ## Credits
 Copyright © [Material Design Icons](https://github.com/Templarian/MaterialDesign) under SIL Open Font 1.1 license.
+
 Copyright © [Sergey Lagner](https://github.com/lagner/QGumboParser) under MIT license.
+
+Special thanks to [Free Web Hosting Area](https://freewebhostingarea.com/) for the updates sever.
 
 ## About
 The program is based on C++, Qt 5, QtAutoUpdater, QGumboParser, and cURL. It's under GPL 3 license.

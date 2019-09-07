@@ -44,7 +44,7 @@ Config::configStruct Config::readConfig()
     // If no resources are exists
     if(resources.isEmpty())
     {
-        resources.append({"http://imageserver.fltplan.com/merge/merge190718/%1.pdf", "0"});
+        resources.append({"http://imageserver.fltplan.com/merge/merge190815/%1.pdf", "0"});
         resources.append({"http://www.sia-enna.dz/PDF/AIP/AD/AD2/%1/", "1"});
         resources.append({"http://caa.gov.ly/ais/wp-content/uploads/2017/AIP/AD/%1.pdf", "0"});
         resources.append({"http://www.caiga.ru/common/AirInter/validaip/aip/ad/ad2/rus/%1/", "1"});

@@ -15,9 +15,7 @@ Component.prototype.createOperations = function()
             "workingDirectory=@TargetDir@");
     } else 
 	{
-		component.addElevatedOperation("Execute", "chmod", "777", "@TargetDir@/icon.svg");
-        component.addElevatedOperation("Execute", "chmod", "-R", "777", "@TargetDir@/translations");
-		component.addElevatedOperation("Execute", "chmod", "-R", "777", "@TargetDir@/lib");
+		component.addElevatedOperation("Execute", "chmod", "-R", "777", "@TargetDir@");
 		component.addElevatedOperation("CreateDesktopEntry", 
                                   "/usr/share/applications/ChartsFinder2.desktop", 
                                   'Type=Application\nTerminal=false\nExec="@TargetDir@/ChartsFinder2"\nName=Charts Finder 2\nIcon=@TargetDir@/icon.svg\nCategories=Utility;');
