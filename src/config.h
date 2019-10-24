@@ -16,14 +16,14 @@ public:
         QRect mainWinGeo;
         QRect settingsWinGeo;
         QString path;
-        bool openCharts, removeFiles, checkUpdates;
+        bool openChart, openFolder, removeFiles, checkUpdates;
         int updatePeriod;
         QList<QStringList> resources;
-    } configStruct;
+    } ConfigStruct;
 
-    static configStruct readConfig();
+    static ConfigStruct readConfig();
 
-    static void writeConfig(configStruct);
+    static void writeConfig(ConfigStruct config);
 };
 
 #endif // CONFIG_H

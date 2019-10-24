@@ -4,26 +4,28 @@
 #include <QMainWindow>
 #include "config.h"
 
-namespace Ui {
-class SettingsWindow;
-}
+QT_BEGIN_NAMESPACE
+namespace Ui { class SettingsWindow; }
+QT_END_NAMESPACE
 
 class SettingsWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    SettingsWindow(QWidget *parent, Config::configStruct config);
+    SettingsWindow(QWidget *parent, Config::ConfigStruct config);
 
     ~SettingsWindow();
 
-    Config::configStruct config;
+    Config::ConfigStruct config;
 
 signals:
     void closed();
 
 private slots:
     void on_pathButton_clicked();
+
+    void on_resTable_cellChanged(int row, int column);
 
     void on_removeButton_clicked();
 
@@ -42,7 +44,7 @@ private:
 
     void setResources();
 
-    void addResource(int row, QString url, QString type, bool selectRow = true);
+    void addResource(int row, QStringList resource, bool selectRow = true);
 
     void setUpdateCombo();
 
@@ -51,6 +53,8 @@ private:
     int getUpdatePeriod();
 
     Ui::SettingsWindow *ui;
+
+    bool adding;
 };
 
 #endif // SETTINGSWINDOW_H

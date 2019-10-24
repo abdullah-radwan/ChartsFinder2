@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets autoupdatergui
+QT       += core gui widgets autoupdaterwidgets
 
 TARGET = ChartsFinder2
 TEMPLATE = app

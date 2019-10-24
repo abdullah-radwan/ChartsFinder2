@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
-    <height>383</height>
+    <width>559</width>
+    <height>414</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -83,8 +83,8 @@
            <widget class="QLabel" name="pathLabel">
             <property name="minimumSize">
              <size>
-              <width>149</width>
-              <height>170</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
             <property name="text">
@@ -119,14 +119,30 @@
              <iconset resource="res.qrc">
               <normaloff>:/res/icons/change.svg</normaloff>:/res/icons/change.svg</iconset>
             </property>
+            <property name="default">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
          </layout>
         </item>
         <item>
-         <widget class="QCheckBox" name="openCheck">
+         <widget class="QCheckBox" name="openChartCheck">
+          <property name="toolTip">
+           <string/>
+          </property>
           <property name="text">
-           <string>Open charts after download</string>
+           <string>Open the chart after download</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="openFolderCheck">
+          <property name="text">
+           <string>Open the charts folder after download</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -135,8 +151,11 @@
         </item>
         <item>
          <widget class="QCheckBox" name="removeCheck">
+          <property name="toolTip">
+           <string>For folder charts only</string>
+          </property>
           <property name="text">
-           <string>Remove downloaded files after cancellation</string>
+           <string>Remove the downloaded charts after cancellation</string>
           </property>
          </widget>
         </item>
@@ -153,16 +172,16 @@
            <enum>QAbstractScrollArea::AdjustToContents</enum>
           </property>
           <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
+           <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
           </property>
           <property name="selectionMode">
            <enum>QAbstractItemView::SingleSelection</enum>
           </property>
           <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectRows</enum>
+           <enum>QAbstractItemView::SelectItems</enum>
           </property>
           <property name="columnCount">
-           <number>2</number>
+           <number>3</number>
           </property>
           <column>
            <property name="text">
@@ -172,6 +191,11 @@
           <column>
            <property name="text">
             <string>Type</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Files suffix</string>
            </property>
           </column>
          </widget>

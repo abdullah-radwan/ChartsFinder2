@@ -6,7 +6,7 @@
 #include <QCloseEvent>
 #include <QDebug>
 
-SettingsWindow::SettingsWindow(QWidget *parent, Config::configStruct config) : QMainWindow(parent), ui(new Ui::SettingsWindow)
+SettingsWindow::SettingsWindow(QWidget *parent, Config::ConfigStruct config) : QMainWindow(parent), ui(new Ui::SettingsWindow)
 {
     ui->setupUi(this);
 
@@ -16,7 +16,9 @@ SettingsWindow::SettingsWindow(QWidget *parent, Config::configStruct config) : Q
     if(!config.settingsWinGeo.isEmpty()) setGeometry(config.settingsWinGeo);
 
     // Set the UI
-    ui->openCheck->setChecked(config.openCharts);
+    ui->openChartCheck->setChecked(config.openChart);
+
+    ui->openFolderCheck->setChecked(config.openFolder);
 
     ui->removeCheck->setChecked(config.removeFiles);
 
@@ -60,7 +62,7 @@ void SettingsWindow::setLangCombo()
         // Add the formatted locale
         ui->langCombo->addItem(QLocale(locale).nativeLanguageName());
 
-        ui->langCombo->setItemData(ui->langCombo->count() - 1, locale);
+        ui->langCombo->setItemData(fileIndex + 2, locale);
     }
 
     // Set the index to the active language
@@ -84,7 +86,7 @@ int SettingsWindow::getUpdatePeriod()
     case 0: return 3;
     case 1: return 7;
     case 2: return 14;
-    default: return 3; // To avoid compiler warning
+    default: return 0; // Never
     }
 }
 
@@ -96,17 +98,17 @@ void SettingsWindow::setUpdateCombo()
     case 3: ui->updatesCombo->setCurrentIndex(0); break;
     case 7: ui->updatesCombo->setCurrentIndex(1); break;
     case 14: ui->updatesCombo->setCurrentIndex(2); break;
+    case 0: ui->updatesCombo->setCurrentIndex(3); break; // Never
     }
 }
 
 void SettingsWindow::on_pathButton_clicked()
 {
-    QString path = QFileDialog::getExistingDirectory(this, tr("Select charts folder"));
+    QString path = QFileDialog::getExistingDirectory(this, tr("Choose the charts folder"), config.path);
 
     if(path.isEmpty()) return;
 
-    // Add slash if no slash is added
-    if(!path.endsWith("/")) path += "/";
+    path += "/";
 
     config.path = path;
 
@@ -117,13 +119,15 @@ void SettingsWindow::on_pathButton_clicked()
 
 void SettingsWindow::setResources()
 {
+    adding = true;
+
     // Reset data
     ui->resTable->setRowCount(0);
 
     // Add data
     for(int row = 0; row < config.resources.size(); row++)
     {
-        addResource(row, config.resources.at(row).first(), config.resources.at(row).last(), false);
+        addResource(row, config.resources.at(row), false);
         QCoreApplication::processEvents();
     }
 
@@ -132,18 +136,20 @@ void SettingsWindow::setResources()
 
     // Select the first row
     ui->resTable->selectRow(0);
+
+    adding = false;
 }
 
-void SettingsWindow::addResource(int row, QString url, QString type, bool selectRow)
+void SettingsWindow::addResource(int row, QStringList resource, bool selectRow)
 {
     ui->resTable->insertRow(row);
 
     // Add the URL
-    ui->resTable->setItem(row, 0, new QTableWidgetItem(url));
+    ui->resTable->setItem(row, 0, new QTableWidgetItem(resource.first()));
 
-    // If it's a normal resource
-    if(type == "0") ui->resTable->setItem(row, 1, new QTableWidgetItem(tr("Normal")));
-    else ui->resTable->setItem(row, 1, new QTableWidgetItem(tr("Folder")));
+    ui->resTable->setItem(row, 1, new QTableWidgetItem(resource.at(1) == "0" ? tr("Normal") : tr("Folder")));
+
+    ui->resTable->setItem(row, 2, new QTableWidgetItem(resource.last()));
 
     // If the row should be selected (useful for add resource method)
     if(selectRow) ui->resTable->selectRow(row);
@@ -151,8 +157,10 @@ void SettingsWindow::addResource(int row, QString url, QString type, bool select
 
 void SettingsWindow::on_addButton_clicked()
 {
+    adding = true;
+
     // Set the dialog and run it. + 1 to show the first value as 1
-    AddDialog addDialog(this, config.resources.size() + 1);
+    AddDialog addDialog(this, config.resources.size());
 
     addDialog.exec();
 
@@ -160,16 +168,103 @@ void SettingsWindow::on_addButton_clicked()
     {
         qDebug() << "Adding resource" << addDialog.url << "type:" << addDialog.type;
 
-        // If it starts with http (also valid for https) and contains %1 (where to add the airport code), add it
-        if(addDialog.url.startsWith("http") && addDialog.url.contains("%1"))
-        {
-            config.resources.insert(addDialog.order, {addDialog.url, addDialog.type});
+        config.resources.insert(addDialog.order, { addDialog.url, addDialog.type, addDialog.suffix });
 
-            addResource(addDialog.order, addDialog.url, addDialog.type);
+        addResource(addDialog.order, { addDialog.url, addDialog.type, addDialog.suffix });
 
-            statusBar()->showMessage(tr("Resource %1 was added.").arg(addDialog.url));
-        } else statusBar()->showMessage(tr("Couldn't add the resource. The syntax isn't correct."));
+        statusBar()->showMessage(tr("The resource %1 is added.").arg(addDialog.url), 5000);
     }
+
+    adding = false;
+}
+
+void SettingsWindow::on_resTable_cellChanged(int row, int column)
+{
+    // This method will be called even if the resources are being added
+    if(adding) return;
+
+    // There are changes below which will cause the method to be called
+    adding = true;
+
+    // Get the resource associated with the item
+    QStringList resource = config.resources.at(row);
+
+    // Get the item which is changed
+    QTableWidgetItem* item = ui->resTable->item(row, column);
+
+    // Get the changed data
+    QString data = item->text().toLower();
+
+    // If the change is in the type, and the entered type isn't English or not 'Normal' nor 'Folder'
+    if(column == 1 && !(data == "normal" || data == "folder"))
+    {
+        statusBar()->showMessage(tr("The resource type must be in English. Enter 'Normal' for normal resources,"
+                                    " or 'Folder' for folder resources.", "Don't translate 'Normal' and 'Folder'."), 5000);
+
+        // Set the item to the original type
+        item->setText(resource.at(1) == "0" ? tr("Normal") : tr("Folder"));
+
+        adding = false;
+
+        return;
+    }
+
+    if(column == 0)
+    {
+        if(data.isEmpty())
+        {
+            statusBar()->showMessage(tr("The resource URL can't be empty."), 5000);
+
+            item->setText(resource.at(0));
+
+            adding = false;
+
+            return;
+        }
+        else if(!data.startsWith("http") || !data.contains("%1") || data.endsWith(".pdf"))
+        {
+            statusBar()->showMessage(tr("The resource URL format is incorrect."), 5000);
+
+            item->setText(resource.at(0));
+
+            adding = false;
+
+            return;
+        }
+    }
+    else if(column == 1)
+    {
+        // Set the data type for the resource list
+        data == "normal" ? data = "0" : data = "1";
+
+        // Set the item to the translated type
+        item->setText(data == "0" ? tr("Normal") : tr("Folder"));
+    }
+    else if(column == 2)
+    {
+        if(data.isEmpty())
+        {
+           statusBar()->showMessage(tr("The resource files suffix can't be empty."), 5000);
+
+           item->setText(resource.at(2));
+
+           adding = false;
+
+           return;
+        }
+        else if(!data.startsWith("."))
+        {
+            data.insert(0, ".");
+
+            item->setText(data);
+        }
+    }
+
+    resource.replace(column, data);
+
+    config.resources.replace(row, resource);
+
+    adding = false;
 }
 
 void SettingsWindow::on_removeButton_clicked()
@@ -189,7 +284,7 @@ void SettingsWindow::on_removeButton_clicked()
 
     config.resources.removeAt(index);
 
-    statusBar()->showMessage(tr("Resource %1 was removed.").arg(resourceUrl));
+    statusBar()->showMessage(tr("The resource %1 is removed.").arg(resourceUrl), 5000);
 }
 
 void SettingsWindow::on_upButton_clicked()
@@ -217,11 +312,11 @@ void SettingsWindow::on_upButton_clicked()
         index--;
 
         // Add it again
-        addResource(index, resource.first(), resource.last());
+        addResource(index, resource);
 
         config.resources.insert(index, resource);
 
-        statusBar()->showMessage(tr("Resource %1 was moved up.").arg(resource.first()));
+        statusBar()->showMessage(tr("The resource %1 is moved up.").arg(resource.first()), 5000);
     }
 }
 
@@ -244,36 +339,36 @@ void SettingsWindow::on_downButton_clicked()
         // Move it down
         index++;
 
-        addResource(index, resource.first(), resource.last());
+        addResource(index, resource);
         config.resources.insert(index, resource);
 
-        statusBar()->showMessage(tr("Resource %1 was moved down.").arg(resource.first()));
+        statusBar()->showMessage(tr("The resource %1 is moved down.").arg(resource.first()), 5000);
     }
 }
 
 void SettingsWindow::on_resetButton_clicked()
 {
     // If the user really wants to reset
-    if(QMessageBox::question(this, tr("Resetting resources"), tr("Are you sure you want to reset resources?")) == QMessageBox::Yes)
+    if(QMessageBox::question(this, tr("Resetting the resources"), tr("Are you sure you want to reset the resources?")) == QMessageBox::Yes)
     {
         qDebug() << "Resetting resources";
 
         config.resources.clear();
 
-        config.resources.append({"http://imageserver.fltplan.com/merge/merge190815/%1.pdf", "0"});
-        config.resources.append({"http://www.sia-enna.dz/PDF/AIP/AD/AD2/%1/", "1"});
-        config.resources.append({"http://caa.gov.ly/ais/wp-content/uploads/2017/AIP/AD/%1.pdf", "0"});
-        config.resources.append({"http://www.caiga.ru/common/AirInter/validaip/aip/ad/ad2/rus/%1/", "1"});
-        config.resources.append({"http://vau.aero/navdb/chart/%1.pdf", "0"});
-        config.resources.append({"http://sa-ivao.net/charts_file/%1.pdf", "0"});
-        config.resources.append({"http://europlanet.de/vaFsP/charts/%1.pdf", "0"});
-        config.resources.append({"http://www.fly-sea.com/charts/%1.pdf", "0"});
-        config.resources.append({"http://uvairlines.com/admin/resources/charts/%1.pdf", "0"});
-        config.resources.append({"https://www.virtualairlines.eu/charts/%1.pdf", "0"});
+        config.resources.append({"http://imageserver.fltplan.com/merge/merge191010/%1", "0", ".pdf"});
+        config.resources.append({"http://www.sia-enna.dz/PDF/AIP/AD/AD2/%1/", "1", ".pdf"});
+        config.resources.append({"http://caa.gov.ly/ais/wp-content/uploads/2017/AIP/AD/%1", "0", ".pdf"});
+        config.resources.append({"http://www.caiga.ru/common/AirInter/validaip/aip/ad/ad2/rus/%1/", "1", ".pdf"});
+        config.resources.append({"http://vau.aero/navdb/chart/%1", "0", ".pdf"});
+        config.resources.append({"http://sa-ivao.net/charts_file/%1", "0", ".pdf"});
+        config.resources.append({"http://europlanet.de/vaFsP/charts/%1", "0", ".pdf"});
+        config.resources.append({"http://www.fly-sea.com/charts/%1", "0", ".pdf"});
+        config.resources.append({"http://uvairlines.com/admin/resources/charts/%1", "0", ".pdf"});
+        config.resources.append({"https://www.virtualairlines.eu/charts/%1", "0", ".pdf"});
 
         setResources();
 
-        statusBar()->showMessage(tr("Resources were reset."));
+        statusBar()->showMessage(tr("The resources are reset."), 5000);
     }
 }
 
@@ -282,7 +377,9 @@ void SettingsWindow::closeEvent(QCloseEvent *bar)
     // Set the config data
     config.settingsWinGeo = geometry();
 
-    config.openCharts = ui->openCheck->isChecked();
+    config.openChart = ui->openChartCheck->isChecked();
+
+    config.openFolder = ui->openFolderCheck->isChecked();
 
     config.removeFiles = ui->removeCheck->isChecked();
 

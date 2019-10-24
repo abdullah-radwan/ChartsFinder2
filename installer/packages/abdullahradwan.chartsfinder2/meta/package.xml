@@ -2,13 +2,15 @@
 <Package>
     <DisplayName>Charts Finder 2</DisplayName>
     <Description>Install Charts Finder 2.</Description>
-    <Version>2.1</Version>
-    <ReleaseDate>2019-09-07</ReleaseDate>
+    <Version>2.2</Version>
+    <ReleaseDate>2019-10-24</ReleaseDate>
     <Licenses>
         <License name="GPL 3 License" file="GPL 3 LICENSE" />
 		<License name="SIL Open Font 1.1 License" file="SIL OPEN FONT 1.1 LICENSE" />
 		<License name="MIT License" file="MIT LICENSE" />
     </Licenses>
     <Default>true</Default>
+	<ForcedInstallation>true</ForcedInstallation>
+    <Essential>true</Essential>
 	<Script>installscript.qs</Script>
 </Package>

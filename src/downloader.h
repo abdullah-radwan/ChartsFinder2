@@ -18,7 +18,7 @@ class Downloader : public QObject
 public:
     Downloader();
 
-    void download(Config::configStruct config, QStringList airports);
+    void download(Config::ConfigStruct config, QStringList airports);
 
     void cancel();
 
@@ -33,9 +33,9 @@ public:
 signals:
     void exists(QString airport);
 
-    void searchingForCharts(QString airport);
+    void searchingForChart(QString airport);
 
-    void downloadingCharts(QString airport);
+    void downloadingChart(QString airport);
 
     void downloadingFolderChart(QString airport, QString chart);
 
@@ -54,11 +54,9 @@ signals:
 private:
     bool downloadFile(QString url, QString filePath);
 
-    bool checkExists(QString path, QString airport, bool openCharts);
+    bool checkExists(QString path, QString airport, QStringList suffixes, bool openChart, bool openFolder);
 
     void downloadFailed(QString airport, CURLcode errorCode);
-
-    void setCurl(bool showProgress = false);
 
     void wait3Seconds();
 

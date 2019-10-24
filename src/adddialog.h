@@ -3,9 +3,9 @@
 
 #include <QDialog>
 
-namespace Ui {
-class AddDialog;
-}
+QT_BEGIN_NAMESPACE
+namespace Ui { class AddDialog; }
+QT_END_NAMESPACE
 
 class AddDialog : public QDialog
 {
@@ -16,7 +16,7 @@ public:
 
     ~AddDialog();
 
-    QString url, type;
+    QString url, type, suffix;
 
     int order;
 

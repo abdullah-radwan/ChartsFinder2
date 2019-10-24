@@ -6,7 +6,7 @@ static QFile* logFile;
 
 void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    Q_UNUSED(context); Q_UNUSED(type);
+    Q_UNUSED(context) Q_UNUSED(type)
 
     QTextStream out(logFile);
 
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     // Install the message handler
     qInstallMessageHandler(messageHandler);
 
-    qDebug() << "Charts Finder 2.1, September 2019";
+    qDebug() << "Charts Finder 2.2, 24 October 2019";
 
     qDebug() << "Current date:" << QDateTime::currentDateTime().toString("yyyy-MM-dd");
 

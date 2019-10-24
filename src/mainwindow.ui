@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Charts Finder</string>
+   <string notr="true">Charts Finder</string>
   </property>
   <property name="windowIcon">
    <iconset resource="res.qrc">
@@ -72,7 +72,7 @@
        <bool>false</bool>
       </property>
       <property name="text">
-       <string>Downloading ICAO charts...</string>
+       <string/>
       </property>
      </widget>
     </item>
@@ -95,15 +95,11 @@
        <iconset resource="res.qrc">
         <normaloff>:/res/icons/download.svg</normaloff>:/res/icons/download.svg</iconset>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="cancelButton">
-      <property name="visible">
+      <property name="autoDefault">
        <bool>false</bool>
       </property>
-      <property name="text">
-       <string>Cancel</string>
+      <property name="default">
+       <bool>true</bool>
       </property>
      </widget>
     </item>

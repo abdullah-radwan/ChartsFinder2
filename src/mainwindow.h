@@ -7,9 +7,9 @@
 #include <QTranslator>
 #include <QLocale>
 
-namespace Ui {
-class MainWindow;
-}
+QT_BEGIN_NAMESPACE
+namespace Ui { class MainWindow; }
+QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
@@ -22,8 +22,6 @@ public:
 
 private slots:
     void on_getButton_clicked();
-
-    void on_cancelButton_clicked();
 
     void on_actionSettings_triggered();
 
@@ -38,9 +36,10 @@ private:
 
     Downloader* downloader;
 
+    QtAutoUpdater::Updater* updater;
     QtAutoUpdater::UpdateController* controller;
 
-    Config::configStruct config;
+    Config::ConfigStruct config;
 
     QTranslator* qtTranslator;
     QTranslator* translator;

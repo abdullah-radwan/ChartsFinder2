@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.2 - 2019-10-24
+### Added
+- Open charts folder option for normal charts.
+- Ability to set the chart file suffix.
+- Cancel button icon.
+- Ability to edit resources.
+### Fixed
+- Writing mistakes.
+- 'Never check updates' option not working correctly.
+### Changed
+- Upgrade auto updater version.
+- Seperating each binary into different modules.
+- The updates server.
+
 ## 2.1 - 2019-09-07
 ### Added
 - Installer.

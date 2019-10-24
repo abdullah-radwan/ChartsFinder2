@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>298</width>
-    <height>145</height>
+    <width>300</width>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,14 +24,21 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="urlEdit"/>
+      <widget class="QLineEdit" name="urlEdit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="typeLayout">
      <item>
-      <widget class="QLabel" name="typyLabel">
+      <widget class="QLabel" name="typeLabel">
        <property name="text">
         <string>Resource type:</string>
        </property>
@@ -49,6 +56,27 @@
          <string>Folder</string>
         </property>
        </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="suffixLayout">
+     <item>
+      <widget class="QLabel" name="suffixLabel">
+       <property name="text">
+        <string>Resource files suffix:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="suffixEdit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
       </widget>
      </item>
     </layout>
@@ -72,6 +100,13 @@
     </layout>
    </item>
    <item>
+    <widget class="QLabel" name="statusLabel">
+     <property name="text">
+      <string>Enter the required informations.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="buttonsLayout">
      <item>
       <widget class="QPushButton" name="cancelButton">
@@ -81,6 +116,9 @@
        <property name="icon">
         <iconset resource="res.qrc">
          <normaloff>:/res/icons/cancel.svg</normaloff>:/res/icons/cancel.svg</iconset>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
