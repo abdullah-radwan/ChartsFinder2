@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     // Install the message handler
     qInstallMessageHandler(messageHandler);
 
-    qDebug() << "Charts Finder 2.2, 24 October 2019";
+    qDebug() << "Charts Finder 2.2.1, 27 October 2019";
 
     qDebug() << "Current date:" << QDateTime::currentDateTime().toString("yyyy-MM-dd");
 

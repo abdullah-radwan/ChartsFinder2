@@ -42,8 +42,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         }
     });
 
-    controller = new QtAutoUpdater::UpdateController(updater, this);
-
     show();
 
     qDebug() << "Main window is shown";
@@ -195,7 +193,7 @@ void MainWindow::checkForUpdates()
 {
     qDebug() << "Starting updater";
 
-    controller->start(QtAutoUpdater::UpdateController::DisplayLevel::Ask);
+    (new QtAutoUpdater::UpdateController(updater, this))->start(QtAutoUpdater::UpdateController::DisplayLevel::Ask);
 }
 
 void MainWindow::on_getButton_clicked()
@@ -252,7 +250,7 @@ void MainWindow::on_actionAbout_triggered()
 
                                                            "Copyright © Abdullah Radwan")
                        // Set the version and the release date to the current locale
-                       .arg("2.2", locale.toString(QDate::fromString("24/10/2019", "d/M/yyyy"), "d MMMM yyyy")));
+                       .arg("2.2.1", locale.toString(QDate::fromString("27/10/2019", "d/M/yyyy"), "d MMMM yyyy")));
 }
 
 void MainWindow::closeEvent(QCloseEvent *bar)

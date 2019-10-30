@@ -37,7 +37,6 @@ private:
     Downloader* downloader;
 
     QtAutoUpdater::Updater* updater;
-    QtAutoUpdater::UpdateController* controller;
 
     Config::ConfigStruct config;
 
