@@ -22,6 +22,9 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    qRegisterMetaTypeStreamOperators<Config::Resource>("Resource");
+    qRegisterMetaTypeStreamOperators<QList<Config::Resource>>("Resources");
+
     // This should be %appdata%/ChartsFinder2 on Windows, and ~/.local/share/ChartsFinder2 on Linux
     QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 
@@ -37,7 +40,7 @@ int main(int argc, char *argv[])
     // Install the message handler
     qInstallMessageHandler(messageHandler);
 
-    qDebug() << "Charts Finder 2.2.1, 27 October 2019";
+    qDebug() << "Charts Finder 2.2.1, 10 November 2019";
 
     qDebug() << "Current date:" << QDateTime::currentDateTime().toString("yyyy-MM-dd");
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Installer>
     <Name>Charts Finder</Name>
-    <Version>2.2.1</Version>
+    <Version>2.2.2</Version>
     <Title>Charts Finder 2 Installer</Title>
     <Publisher>Abdullah Radwan</Publisher>
     <InstallerWindowIcon>../res/icons/icon</InstallerWindowIcon>

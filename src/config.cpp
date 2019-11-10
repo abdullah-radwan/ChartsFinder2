@@ -4,6 +4,7 @@
 #include <QStandardPaths>
 #include <QApplication>
 #include <QDebug>
+#include <QDataStream>
 
 Config::ConfigStruct Config::readConfig()
 { 
@@ -40,52 +41,40 @@ Config::ConfigStruct Config::readConfig()
     // Get the resource as QVariant
     QList<QVariant> cResources = settings.value("Resources").toList();
 
-    QList<QStringList> resources;
+    QList<Resource> resources = settings.value("Resources").value<QList<Resource>>();
 
-    // Copy values to the string resources list
-    foreach(QVariant var, cResources) resources.append(var.toStringList());
-
-    // If no resources are exists
-    if(resources.isEmpty())
+    if(resources.isEmpty() && !cResources.isEmpty())
     {
-        resources.append({"http://imageserver.fltplan.com/merge/merge191010/%1", "0", ".pdf"});
-        resources.append({"http://www.sia-enna.dz/PDF/AIP/AD/AD2/%1/", "1", ".pdf"});
-        resources.append({"http://caa.gov.ly/ais/wp-content/uploads/2017/AIP/AD/%1", "0", ".pdf"});
-        resources.append({"http://www.caiga.ru/common/AirInter/validaip/aip/ad/ad2/rus/%1/", "1", ".pdf"});
-        resources.append({"http://vau.aero/navdb/chart/%1", "0", ".pdf"});
-        resources.append({"http://sa-ivao.net/charts_file/%1", "0", ".pdf"});
-        resources.append({"http://europlanet.de/vaFsP/charts/%1", "0", ".pdf"});
-        resources.append({"http://www.fly-sea.com/charts/%1", "0", ".pdf"});
-        resources.append({"http://uvairlines.com/admin/resources/charts/%1", "0", ".pdf"});
-        resources.append({"https://www.virtualairlines.eu/charts/%1", "0", ".pdf"});
-    } else
-    {
-        // Upgrade the old resources to the new format
-        for (int index = 0; index < resources.size(); index++)
+        // Copy values to the string resources list
+        for(const QVariant& var : cResources)
         {
-            QStringList resource = resources.at(index);
-
-            // If it ends with normal (not upgraded because upgraded ends with suffix)
-            if(resource.last() == "0")
-            {
-                // Remove the suffix from the URL
-                resource.first().remove(".pdf", Qt::CaseInsensitive);
-
-                // Add the suffix to the resource
-                resource.append(".pdf");
-            }
-            // No need to remove the suffix as it doesn't exists if it's a folder resource
-            else if(resource.last() == "1") resource.append(".pdf");
-
-            resources.replace(index, resource);
+            QStringList resource = var.toStringList();
+            resources.append({resource.first(), resource.at(1) == "1", resource.last()});
         }
+    }
+    // If no resources are exists
+    else if(resources.isEmpty())
+    {
+        resources.append({"http://imageserver.fltplan.com/merge/merge191107/%1", false, ".pdf"});
+        resources.append({"http://www.sia-enna.dz/PDF/AIP/AD/AD2/%1/", true, ".pdf"});
+        resources.append({"http://caa.gov.ly/ais/wp-content/uploads/2017/AIP/AD/%1", false, ".pdf"});
+        resources.append({"http://www.caiga.ru/common/AirInter/validaip/aip/ad/ad2/rus/%1/", true, ".pdf"});
+        resources.append({"http://kan.kg/ais/eaip/aipcharts/%1/", true, ".pdf"});
+        resources.append({"https://www.ais.gov.mm/eAIP/2019-10-24-AIRAC/graphics/eAIP/AD/%1/", true, ".pdf"});
+        resources.append({"http://www.aip.net.nz/pdf/%1", false, ".pdf"});
+        resources.append({"http://vau.aero/navdb/chart/%1", false, ".pdf"});
+        resources.append({"http://sa-ivao.net/charts_file/%1", false, ".pdf"});
+        resources.append({"http://europlanet.de/vaFsP/charts/%1", false, ".pdf"});
+        resources.append({"http://www.fly-sea.com/charts/%1", false, ".pdf"});
+        resources.append({"http://uvairlines.com/admin/resources/charts/%1", false, ".pdf"});
+        resources.append({"https://www.virtualairlines.eu/charts/%1", false, ".pdf"});
     }
 
     settings.endGroup();
 
     qDebug() << "Config is read";
 
-    return { language, mainWinGeo, settingsWinGeo, path, openChart, openFolder, removeFiles, checkUpdates, updatePeriod, resources };
+    return { language, path, mainWinGeo, settingsWinGeo, openChart, openFolder, removeFiles, checkUpdates, updatePeriod, resources };
 }
 
 void Config::writeConfig(Config::ConfigStruct config)
@@ -116,14 +105,23 @@ void Config::writeConfig(Config::ConfigStruct config)
     // If updates were checked or the written date is invalid, reset the check date
     if(config.checkUpdates || !settings.value("CheckDate", 0).toDate().isValid()) settings.setValue("CheckDate", QDate::currentDate());
 
-    QList<QVariant> resources;
-
-    // Write each to resource to QVariant
-    foreach(QStringList list, config.resources) resources.append(list);
-
-    settings.setValue("Resources", resources);
+    settings.setValue("Resources", QVariant::fromValue(config.resources));
 
     settings.endGroup();
 
     qDebug() << "Config is written";
+}
+
+QDataStream& operator<<(QDataStream& out, const Config::Resource& resource)
+{
+    out << resource.url << resource.type << resource.suffix;
+
+    return out;
+}
+
+QDataStream& operator>>(QDataStream& in, Config::Resource& resource)
+{
+    in >> resource.url >> resource.type >> resource.suffix;
+
+    return in;
 }

@@ -80,9 +80,9 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
     QStringList suffixes;
 
     // Add every known suffix to check if the chart exists
-    foreach(QStringList resource, config.resources) if(!suffixes.contains(resource.last())) suffixes.append(resource.last());
+    for(const Config::Resource& resource : config.resources) if(!suffixes.contains(resource.suffix)) suffixes.append(resource.suffix);
 
-    foreach(QString airport, airports)
+    for(const QString& airport : airports)
     {
         if(canceled) break;
 
@@ -111,7 +111,7 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
         bool found = false;
         bool oFailed = false;
 
-        foreach(QStringList resource, config.resources)
+        for(const Config::Resource& resource : config.resources)
         {
             bool failed = false;
             oFailed = false;
@@ -121,8 +121,8 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
             // Set the initial URL based on the resource type
             // For normal, set the URL plus the suffix to check if it's available
             // For folder, just set the URL
-            if(resource.at(1) == "0") url = resource.first().arg(airport) + resource.last();
-            else url = resource.first().arg(airport);
+            if(resource.type) url = resource.url.arg(airport);
+            else url = resource.url.arg(airport) + resource.suffix;
 
             // Connect initially here to check if the URL is valid
             showProgress = false;
@@ -141,32 +141,7 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
             } else qDebug() << "Downloading from" << url;
 
             // If it's a normal resource
-            if(resource.at(1) == "0")
-            {
-                emit downloadingChart(airport);
-
-                QCoreApplication::processEvents();
-
-                QString downloadPath = config.path + airport + resource.last();
-
-                // If file download failed
-                failed = !downloadFile(url, downloadPath);
-
-                // Set the outer failed and break
-                if(failed) { oFailed = true; break; }
-
-                found = true;
-
-                emit finished(airport);
-
-                // Open the chart file if downloaded
-                if(config.openChart) QDesktopServices::openUrl(QUrl::fromLocalFile(downloadPath));
-
-                if(config.openFolder) QDesktopServices::openUrl(QUrl::fromLocalFile(config.path));
-
-                break;
-            }
-            else
+            if(resource.type)
             {
                 QString html;
 
@@ -194,10 +169,8 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
 
                 QStringList files;
 
-                QString suffix = resource.last();
-
                 // Check all links in the page
-                foreach(QGumboNode node, nodes)
+                for(const QGumboNode& node : nodes)
                 {
                     QCoreApplication::processEvents();
 
@@ -205,7 +178,7 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
                     QString attr = node.getAttribute("href");
 
                     // Add it if it points to a PDF file
-                    if(attr.endsWith(suffix)) files.append(url + attr);
+                    if(attr.endsWith(resource.suffix)) files.append(url + attr);
                 }
 
                 // If empty, go to the next resource
@@ -218,18 +191,18 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
                 // If the chart path couldn't be created
                 if(!QDir(chartPath).mkpath(".")) { oFailed = true; break; }
 
-                foreach(QString file, files)
+                for(const QString& file : files)
                 {
                     QCoreApplication::processEvents();
 
                     // Get the chart file name by getting the last entry of the URL
                     // Which is the filename, then remove the extension.
-                    QString chartName = file.split("/").last().remove(suffix);
+                    QString chartName = file.split("/").last().remove(resource.suffix);
 
                     emit downloadingFolderChart(airport, chartName);
 
                     // Download the PDF file
-                    failed = !downloadFile(file, chartPath + chartName + suffix);
+                    failed = !downloadFile(file, chartPath + chartName + resource.suffix);
 
                     if(canceled) break;
 
@@ -249,6 +222,31 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
 
                 // Open the airport chart folder
                 if(config.openChart) QDesktopServices::openUrl(QUrl::fromLocalFile(chartPath));
+
+                if(config.openFolder) QDesktopServices::openUrl(QUrl::fromLocalFile(config.path));
+
+                break;
+            }
+            else
+            {
+                emit downloadingChart(airport);
+
+                QCoreApplication::processEvents();
+
+                QString downloadPath = config.path + airport + resource.suffix;
+
+                // If file download failed
+                failed = !downloadFile(url, downloadPath);
+
+                // Set the outer failed and break
+                if(failed) { oFailed = true; break; }
+
+                found = true;
+
+                emit finished(airport);
+
+                // Open the chart file if downloaded
+                if(config.openChart) QDesktopServices::openUrl(QUrl::fromLocalFile(downloadPath));
 
                 if(config.openFolder) QDesktopServices::openUrl(QUrl::fromLocalFile(config.path));
 
@@ -275,7 +273,7 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
 
 bool Downloader::checkExists(QString path, QString airport, QStringList suffixes, bool openChart, bool openFolder)
 {
-    foreach(QString suffix, suffixes)
+    for(const QString& suffix : suffixes)
     {
         // If a PDF file with the airport name exists
         if(QFileInfo(path + airport + suffix).exists())

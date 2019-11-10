@@ -140,16 +140,16 @@ void SettingsWindow::setResources()
     adding = false;
 }
 
-void SettingsWindow::addResource(int row, QStringList resource, bool selectRow)
+void SettingsWindow::addResource(int row, Config::Resource resource, bool selectRow)
 {
     ui->resTable->insertRow(row);
 
     // Add the URL
-    ui->resTable->setItem(row, 0, new QTableWidgetItem(resource.first()));
+    ui->resTable->setItem(row, 0, new QTableWidgetItem(resource.url));
 
-    ui->resTable->setItem(row, 1, new QTableWidgetItem(resource.at(1) == "0" ? tr("Normal") : tr("Folder")));
+    ui->resTable->setItem(row, 1, new QTableWidgetItem(resource.type ? tr("Folder") : tr("Normal")));
 
-    ui->resTable->setItem(row, 2, new QTableWidgetItem(resource.last()));
+    ui->resTable->setItem(row, 2, new QTableWidgetItem(resource.suffix));
 
     // If the row should be selected (useful for add resource method)
     if(selectRow) ui->resTable->selectRow(row);
@@ -168,9 +168,9 @@ void SettingsWindow::on_addButton_clicked()
     {
         qDebug() << "Adding resource" << addDialog.url << "type:" << addDialog.type;
 
-        config.resources.insert(addDialog.order, { addDialog.url, addDialog.type, addDialog.suffix });
+        config.resources.insert(addDialog.order, { addDialog.url, addDialog.type == "1", addDialog.suffix });
 
-        addResource(addDialog.order, { addDialog.url, addDialog.type, addDialog.suffix });
+        addResource(addDialog.order, { addDialog.url, addDialog.type == "1", addDialog.suffix });
 
         statusBar()->showMessage(tr("The resource %1 is added.").arg(addDialog.url), 5000);
     }
@@ -187,7 +187,7 @@ void SettingsWindow::on_resTable_cellChanged(int row, int column)
     adding = true;
 
     // Get the resource associated with the item
-    QStringList resource = config.resources.at(row);
+    Config::Resource resource = config.resources.at(row);
 
     // Get the item which is changed
     QTableWidgetItem* item = ui->resTable->item(row, column);
@@ -202,7 +202,7 @@ void SettingsWindow::on_resTable_cellChanged(int row, int column)
                                     " or 'Folder' for folder resources.", "Don't translate 'Normal' and 'Folder'."), 5000);
 
         // Set the item to the original type
-        item->setText(resource.at(1) == "0" ? tr("Normal") : tr("Folder"));
+        item->setText(resource.type ? tr("Folder") :  tr("Normal"));
 
         adding = false;
 
@@ -215,7 +215,7 @@ void SettingsWindow::on_resTable_cellChanged(int row, int column)
         {
             statusBar()->showMessage(tr("The resource URL can't be empty."), 5000);
 
-            item->setText(resource.at(0));
+            item->setText(resource.url);
 
             adding = false;
 
@@ -225,12 +225,14 @@ void SettingsWindow::on_resTable_cellChanged(int row, int column)
         {
             statusBar()->showMessage(tr("The resource URL format is incorrect."), 5000);
 
-            item->setText(resource.at(0));
+            item->setText(resource.url);
 
             adding = false;
 
             return;
         }
+
+        resource.url = data;
     }
     else if(column == 1)
     {
@@ -239,6 +241,8 @@ void SettingsWindow::on_resTable_cellChanged(int row, int column)
 
         // Set the item to the translated type
         item->setText(data == "0" ? tr("Normal") : tr("Folder"));
+
+        resource.type = data == "1";
     }
     else if(column == 2)
     {
@@ -246,7 +250,7 @@ void SettingsWindow::on_resTable_cellChanged(int row, int column)
         {
            statusBar()->showMessage(tr("The resource files suffix can't be empty."), 5000);
 
-           item->setText(resource.at(2));
+           item->setText(resource.suffix);
 
            adding = false;
 
@@ -258,9 +262,9 @@ void SettingsWindow::on_resTable_cellChanged(int row, int column)
 
             item->setText(data);
         }
-    }
 
-    resource.replace(column, data);
+        resource.suffix = data;
+    }
 
     config.resources.replace(row, resource);
 
@@ -276,7 +280,7 @@ void SettingsWindow::on_removeButton_clicked()
     int index = ui->resTable->selectedItems().first()->row();
 
     // Get the resource URL
-    QString resourceUrl = config.resources.at(index).first();
+    QString resourceUrl = config.resources.at(index).url;
 
     qDebug() << "Removing resource" << resourceUrl;
 
@@ -296,12 +300,12 @@ void SettingsWindow::on_upButton_clicked()
     int index = ui->resTable->selectedItems().first()->row();
 
     // Get the selected resource
-    QStringList resource = config.resources.at(index);
+    Config::Resource resource = config.resources.at(index);
 
     // If it can be moved up
     if(index - 1 >= 0)
     {
-        qDebug() << "Moving resource" << resource << "up";
+        qDebug() << "Moving resource" << resource.url << "up";
 
         // Remove the resource
         ui->resTable->removeRow(index);
@@ -316,7 +320,7 @@ void SettingsWindow::on_upButton_clicked()
 
         config.resources.insert(index, resource);
 
-        statusBar()->showMessage(tr("The resource %1 is moved up.").arg(resource.first()), 5000);
+        statusBar()->showMessage(tr("The resource %1 is moved up.").arg(resource.url), 5000);
     }
 }
 
@@ -326,12 +330,12 @@ void SettingsWindow::on_downButton_clicked()
 
     int index = ui->resTable->selectedItems().first()->row();
 
-    QStringList resource = config.resources.at(index);
+    Config::Resource resource = config.resources.at(index);
 
     // If it can be moved down
     if(index + 1 < config.resources.size())
     {
-        qDebug() << "Moving resource" << resource << "down";
+        qDebug() << "Moving resource" << resource.url << "down";
 
         ui->resTable->removeRow(index);
         config.resources.removeAt(index);
@@ -342,7 +346,7 @@ void SettingsWindow::on_downButton_clicked()
         addResource(index, resource);
         config.resources.insert(index, resource);
 
-        statusBar()->showMessage(tr("The resource %1 is moved down.").arg(resource.first()), 5000);
+        statusBar()->showMessage(tr("The resource %1 is moved down.").arg(resource.url), 5000);
     }
 }
 
@@ -355,16 +359,19 @@ void SettingsWindow::on_resetButton_clicked()
 
         config.resources.clear();
 
-        config.resources.append({"http://imageserver.fltplan.com/merge/merge191010/%1", "0", ".pdf"});
-        config.resources.append({"http://www.sia-enna.dz/PDF/AIP/AD/AD2/%1/", "1", ".pdf"});
-        config.resources.append({"http://caa.gov.ly/ais/wp-content/uploads/2017/AIP/AD/%1", "0", ".pdf"});
-        config.resources.append({"http://www.caiga.ru/common/AirInter/validaip/aip/ad/ad2/rus/%1/", "1", ".pdf"});
-        config.resources.append({"http://vau.aero/navdb/chart/%1", "0", ".pdf"});
-        config.resources.append({"http://sa-ivao.net/charts_file/%1", "0", ".pdf"});
-        config.resources.append({"http://europlanet.de/vaFsP/charts/%1", "0", ".pdf"});
-        config.resources.append({"http://www.fly-sea.com/charts/%1", "0", ".pdf"});
-        config.resources.append({"http://uvairlines.com/admin/resources/charts/%1", "0", ".pdf"});
-        config.resources.append({"https://www.virtualairlines.eu/charts/%1", "0", ".pdf"});
+        config.resources.append({"http://imageserver.fltplan.com/merge/merge191107/%1", false, ".pdf"});
+        config.resources.append({"http://www.sia-enna.dz/PDF/AIP/AD/AD2/%1/", true, ".pdf"});
+        config.resources.append({"http://caa.gov.ly/ais/wp-content/uploads/2017/AIP/AD/%1", false, ".pdf"});
+        config.resources.append({"http://www.caiga.ru/common/AirInter/validaip/aip/ad/ad2/rus/%1/", true, ".pdf"});
+        config.resources.append({"http://kan.kg/ais/eaip/aipcharts/%1/", true, ".pdf"});
+        config.resources.append({"https://www.ais.gov.mm/eAIP/2019-10-24-AIRAC/graphics/eAIP/AD/%1/", true, ".pdf"});
+        config.resources.append({"http://www.aip.net.nz/pdf/%1", false, ".pdf"});
+        config.resources.append({"http://vau.aero/navdb/chart/%1", false, ".pdf"});
+        config.resources.append({"http://sa-ivao.net/charts_file/%1", false, ".pdf"});
+        config.resources.append({"http://europlanet.de/vaFsP/charts/%1", false, ".pdf"});
+        config.resources.append({"http://www.fly-sea.com/charts/%1", false, ".pdf"});
+        config.resources.append({"http://uvairlines.com/admin/resources/charts/%1", false, ".pdf"});
+        config.resources.append({"https://www.virtualairlines.eu/charts/%1", false, ".pdf"});
 
         setResources();
 

@@ -44,7 +44,7 @@ private:
 
     void setResources();
 
-    void addResource(int row, QStringList resource, bool selectRow = true);
+    void addResource(int row, Config::Resource resource, bool selectRow = true);
 
     void setUpdateCombo();
 

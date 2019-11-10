@@ -250,7 +250,7 @@ void MainWindow::on_actionAbout_triggered()
 
                                                            "Copyright © Abdullah Radwan")
                        // Set the version and the release date to the current locale
-                       .arg("2.2.1", locale.toString(QDate::fromString("27/10/2019", "d/M/yyyy"), "d MMMM yyyy")));
+                       .arg("2.2.2", locale.toString(QDate::fromString("10/11/2019", "d/M/yyyy"), "d MMMM yyyy")));
 }
 
 void MainWindow::closeEvent(QCloseEvent *bar)

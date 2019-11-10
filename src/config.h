@@ -10,20 +10,30 @@ class Config
 {
 public:
 
-    typedef struct
+    struct Resource
     {
-        QString language;
-        QRect mainWinGeo;
-        QRect settingsWinGeo;
-        QString path;
+        QString url;
+        bool type;
+        QString suffix;
+    };
+
+    struct ConfigStruct
+    {
+        QString language, path;
+        QRect mainWinGeo, settingsWinGeo;
         bool openChart, openFolder, removeFiles, checkUpdates;
         int updatePeriod;
-        QList<QStringList> resources;
-    } ConfigStruct;
+        QList<Resource> resources;
+    };
 
     static ConfigStruct readConfig();
 
     static void writeConfig(ConfigStruct config);
+
+    friend QDataStream& operator<<(QDataStream& out, const Resource& resource);
+    friend QDataStream& operator>>(QDataStream& in, Resource& resource);
 };
+
+Q_DECLARE_METATYPE(Config::Resource);
 
 #endif // CONFIG_H

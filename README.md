@@ -1,4 +1,4 @@
-# Charts Finder 2.2
+# Charts Finder 2.2.2
 Charts Finder is a tool to get charts for your flights.
 
 Read the manual for full explanation.
@@ -36,8 +36,6 @@ Then run the following command: `binarycreator -c config/config.xml -p packages 
 Copyright © [Material Design Icons](https://github.com/Templarian/MaterialDesign) under SIL Open Font 1.1 license.
 
 Copyright © [Sergey Lagner](https://github.com/lagner/QGumboParser) under MIT license.
-
-Special thanks to [Free Web Hosting Area](https://freewebhostingarea.com/) for the updates sever.
 
 ## About
 The program is based on C++, Qt 5, QtAutoUpdater, QGumboParser, and cURL. It's under GPL 3 license.
