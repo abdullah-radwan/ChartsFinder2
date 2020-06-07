@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 2.3 - 2020-06-06
+## 2.3 - 2020-06-07
+### Fixed
+- Language doesn't change if English is selected.
 ### Changed
 - UI design.
 - Config file format.
@@ -13,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Installer & updater repository.
 ### Removed
 - 'Remove the downloaded charts after cancellation' option.
+- Dot from resource file suffix.
 
 ## 2.2.2 - 2019-11-10
 ### Added
