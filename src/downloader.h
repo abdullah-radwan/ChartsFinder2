@@ -1,71 +1,49 @@
 #ifndef DOWNLOADER_H
 #define DOWNLOADER_H
 
-#include <QEventLoop>
-#include <QMap>
-#include <QDebug>
-#include <QCoreApplication>
-#include <QTimer>
-#include <QFileInfo>
-#include <QDir>
 #include "curl/curl.h"
-#include "config.h"
+#include "configeditor.h"
 
 class Downloader : public QObject
 {
     Q_OBJECT
 
 public:
-    Downloader();
-
-    void download(Config::ConfigStruct config, QStringList airports);
-
+    Downloader(ConfigEditor::Config *config);
+    ~Downloader();
     void cancel();
 
-    ~Downloader();
-
     bool valid = true;
-
     bool running = false;
-
-    bool canceled, showProgress;
+    bool canceled;
+    bool showProgress;
 
 signals:
-    void exists(QString airport);
-
-    void searchingForChart(QString airport);
-
-    void downloadingChart(QString airport);
-
-    void downloadingFolderChart(QString airport, QString chart);
-
+    void chartsExists(QString airport);
+    void searchingCharts(QString airport);
+    void downloadingCharts(QString airport);
+    void downloadingFolderCharts(QString airport, QString chart);
     void downloadProgress(double received, double total);
-
-    void finished(QString airport);
-
-    void notFound(QString airport);
-
-    void failed(QString airport, QString error);
-
+    void downloadFinished(QString airport);
     void processFinished();
 
+    void chartsNotFound(QString airport);
+    void downloadFailed(QString airport, QString error);
     void processCanceled();
 
+public slots:
+    void download(QStringList airports);
+
 private:
+    bool checkExists(QString airport, QStringList suffixes);
     bool downloadFile(QString url, QString filePath);
-
-    bool checkExists(QString path, QString airport, QStringList suffixes, bool openChart, bool openFolder);
-
-    void downloadFailed(QString airport, CURLcode errorCode);
-
+    void downloadError(QString airport, CURLcode errorCode);
     void wait3Seconds();
 
-    CURL* curl;
-
+    ConfigEditor::Config *config;
+    CURL *curl;
     CURLcode result;
-
     char errorBuffer[CURL_ERROR_SIZE];
-
 };
 
 #endif // DOWNLOADER_H

@@ -4,7 +4,9 @@
 #include <QDialog>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class AddDialog; }
+namespace Ui {
+class AddDialog;
+}
 QT_END_NAMESPACE
 
 class AddDialog : public QDialog
@@ -13,18 +15,13 @@ class AddDialog : public QDialog
 
 public:
     AddDialog(QWidget *parent, int resourcesSize);
-
     ~AddDialog();
 
     QString url, type, suffix;
-
     int order;
-
-    bool added = false;
 
 private slots:
     void on_addButton_clicked();
-
     void on_cancelButton_clicked();
 
 private:

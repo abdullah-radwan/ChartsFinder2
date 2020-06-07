@@ -1,0 +1,41 @@
+<Updates>
+ <ApplicationName>{AnyApplication}</ApplicationName>
+ <ApplicationVersion>1.0.0</ApplicationVersion>
+ <Checksum>true</Checksum>
+ <PackageUpdate>
+  <Name>chartsfinder2</Name>
+  <DisplayName>Charts Finder 2</DisplayName>
+  <Description>Install Charts Finder 2.</Description>
+  <Version>2.3</Version>
+  <ReleaseDate>2020-06-07</ReleaseDate>
+  <Default>true</Default>
+  <ForcedInstallation>true</ForcedInstallation>
+  <Essential>true</Essential>
+  <Script>installscript.qs</Script>
+  <UpdateFile CompressedSize="1552198" UncompressedSize="4515286" OS="Any"/>
+  <DownloadableArchives>chartsfinder2.7z</DownloadableArchives>
+  <Licenses>
+   <License name="GPL v3" file="GPL v3.txt"/>
+   <License name="SIL Open Font v1.1" file="SIL Open Font v1.1.txt"/>
+   <License name="MIT" file="MIT.txt"/>
+  </Licenses>
+  <SHA1>bd7d335192c1d5c7d6807571b84fd88289d1e7cb</SHA1>
+ </PackageUpdate>
+ <PackageUpdate>
+  <Name>qt5</Name>
+  <DisplayName>Qt 5 binaries</DisplayName>
+  <Description>Install Qt 5 binaries.</Description>
+  <Version>5.14.1</Version>
+  <ReleaseDate>2020-01-27</ReleaseDate>
+  <Default>true</Default>
+  <ForcedInstallation>true</ForcedInstallation>
+  <Essential>true</Essential>
+  <Script>installscript.qs</Script>
+  <UpdateFile CompressedSize="9522080" UncompressedSize="39818764" OS="Any"/>
+  <DownloadableArchives>qt5.7z</DownloadableArchives>
+  <Licenses>
+   <License name="LGPL v3" file="LGPL v3.txt"/>
+  </Licenses>
+  <SHA1>dfaecf942446eb8f56fabcf16229c2b0a06b8ebb</SHA1>
+ </PackageUpdate>
+</Updates>

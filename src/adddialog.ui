@@ -6,139 +6,119 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>200</height>
+    <width>374</width>
+    <height>217</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Add a resource</string>
+   <string>Resource addition</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <layout class="QHBoxLayout" name="urlLayout">
-     <item>
-      <widget class="QLabel" name="urlLabel">
-       <property name="text">
-        <string>Resource URL:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="urlEdit">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="typeLayout">
-     <item>
-      <widget class="QLabel" name="typeLabel">
-       <property name="text">
-        <string>Resource type:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="typeCombo">
-       <item>
-        <property name="text">
-         <string>Normal</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Folder</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="suffixLayout">
-     <item>
-      <widget class="QLabel" name="suffixLabel">
-       <property name="text">
-        <string>Resource files suffix:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="suffixEdit">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="orderLayout">
-     <item>
-      <widget class="QLabel" name="orderLabel">
-       <property name="text">
-        <string>Resource order:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="orderSpin">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="statusLabel">
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="urlLabel">
      <property name="text">
-      <string>Enter the required informations.</string>
+      <string>Resource URL:</string>
      </property>
     </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="buttonsLayout">
+   <item row="1" column="0">
+    <widget class="QLabel" name="typeLabel">
+     <property name="text">
+      <string>Resource type:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QLineEdit" name="suffixEdit"/>
+   </item>
+   <item row="6" column="0">
+    <widget class="QPushButton" name="cancelButton">
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../res/res.qrc">
+       <normaloff>:/cancel.svg</normaloff>:/cancel.svg</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="4">
+    <widget class="QPushButton" name="addButton">
+     <property name="text">
+      <string>Add</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../res/res.qrc">
+       <normaloff>:/add.svg</normaloff>:/add.svg</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="4">
+    <widget class="QSpinBox" name="orderSpin">
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>999999999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLineEdit" name="urlEdit"/>
+   </item>
+   <item row="1" column="4">
+    <widget class="QComboBox" name="typeCombo">
      <item>
-      <widget class="QPushButton" name="cancelButton">
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-       <property name="icon">
-        <iconset resource="res.qrc">
-         <normaloff>:/res/icons/cancel.svg</normaloff>:/res/icons/cancel.svg</iconset>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-      </widget>
+      <property name="text">
+       <string>Normal</string>
+      </property>
      </item>
      <item>
-      <widget class="QPushButton" name="addButton">
-       <property name="text">
-        <string>Add</string>
-       </property>
-       <property name="icon">
-        <iconset resource="res.qrc">
-         <normaloff>:/res/icons/add.svg</normaloff>:/res/icons/add.svg</iconset>
-       </property>
-      </widget>
+      <property name="text">
+       <string>Folder</string>
+      </property>
      </item>
-    </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="suffixLabel">
+     <property name="text">
+      <string>Resource files suffix:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="orderLabel">
+     <property name="text">
+      <string>Resource order:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="5">
+    <widget class="QLabel" name="statusLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="visible">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>urlEdit</tabstop>
+  <tabstop>typeCombo</tabstop>
+  <tabstop>suffixEdit</tabstop>
+  <tabstop>orderSpin</tabstop>
+  <tabstop>cancelButton</tabstop>
+  <tabstop>addButton</tabstop>
+ </tabstops>
  <resources>
-  <include location="res.qrc"/>
+  <include location="../res/res.qrc"/>
  </resources>
  <connections/>
 </ui>

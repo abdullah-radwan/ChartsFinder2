@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    <DisplayName>Qt 5 binaries</DisplayName>
+    <Description>Install Qt 5 binaries.</Description>
+    <Version>5.14.1</Version>
+    <ReleaseDate>2020-01-27</ReleaseDate>
+    <Licenses>
+        <License name="LGPL v3" file="LGPL v3.txt" />
+    </Licenses>
+    <Default>true</Default>
+	<ForcedInstallation>true</ForcedInstallation>
+    <Essential>true</Essential>
+	<Script>installscript.qs</Script>
+</Package>

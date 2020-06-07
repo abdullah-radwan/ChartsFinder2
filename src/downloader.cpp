@@ -1,57 +1,62 @@
 #include "downloader.h"
+
 #include <QGumboParser/qgumbodocument.h>
 #include <QGumboParser/qgumbonode.h>
 #include <QDesktopServices>
+#include <QTimer>
+#include <QDir>
+#include <QFile>
+#include <QUrl>
+#include <QEventLoop>
+#include <QDebug>
 
-int progressCallback(void* clientp, double dltotal, double dlnow, double ultotal, double ulnow)
+int progressCallback(void *clientp, double dltotal, double dlnow, double ultotal, double ulnow)
 {
     Q_UNUSED(ultotal) Q_UNUSED(ulnow) // Avoid unused variable warning
 
-    // Process GUI events
-    QCoreApplication::processEvents();
+    auto downloader = static_cast<Downloader *>(clientp);
 
-    auto downloader = static_cast<Downloader*>(clientp);
+    // If the progress is to be shown (not needed while checking for URL validity)
+    if (downloader->showProgress)
+        emit downloader->downloadProgress(dlnow, dltotal);
 
-    // If the progress is to be shown (Not needed while checking for URL validity)
-    if(downloader->showProgress) emit downloader->downloadProgress(dlnow, dltotal);
-
-    // Return 0 if canceled if false, 1 (to abort the operation) if canceled is true
+    // Return 0 if canceled is false, 1 (to abort the operation) if canceled is true
     return downloader->canceled;
 }
 
 // Dummy callback to avoid cURL writing in the output
-size_t dummyCallack(void* ptr, size_t size, size_t nmemb, void* userdata)
+size_t dummyCallack(void *ptr, size_t size, size_t nmemb, void *userdata)
 {
     Q_UNUSED(ptr) Q_UNUSED(userdata)
 
     return size * nmemb;
 }
 
-size_t writeCallback(char* ptr, size_t size, size_t nmemb, void* userdata)
+size_t writeCallback(char *ptr, size_t size, size_t nmemb, void *userdata)
 {
     // Write the data to the file
-    return static_cast<size_t>(static_cast<QFile*>(userdata)->write(ptr, size * nmemb));
+    return static_cast<size_t>(static_cast<QFile *>(userdata)->write(ptr, size * nmemb));
 }
 
-size_t writeHtmlCallback(char* ptr, size_t size, size_t nmemb, void* userdata)
+size_t writeHtmlCallback(char *ptr, size_t size, size_t nmemb, void *userdata)
 {
     // Add the HTML to the string
-    static_cast<QString*>(userdata)->append(ptr);
+    static_cast<QString *>(userdata)->append(ptr);
 
     return size * nmemb;
 }
 
-Downloader::Downloader()
+Downloader::Downloader(ConfigEditor::Config *config)
 {
+    this->config = config;
     curl = curl_easy_init();
 
-    if(curl)
-    {
+    if (curl) {
         // Follow redirects
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
         // Fail if the server returns error code
         curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1);
-        // Know error details
+        // Write error details
         curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errorBuffer);
         // Set a progress callback
         curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0);
@@ -60,18 +65,14 @@ Downloader::Downloader()
         // Set the data as this downloader instance
         curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, this);
     }
-    // If NULL
-    else
-    {
-        qDebug() << "Warning: Couldn't initialize cURL!";
-
+    else {
+        qDebug() << "Couldn't initialize cURL";
         valid = false;
     }
 }
 
-void Downloader::download(Config::ConfigStruct config, QStringList airports)
+void Downloader::download(QStringList airports)
 {
-    // Reset indications
     running = true;
     canceled = false;
 
@@ -79,49 +80,48 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
 
     QStringList suffixes;
 
-    // Add every known suffix to check if the chart exists
-    for(const Config::Resource& resource : config.resources) if(!suffixes.contains(resource.suffix)) suffixes.append(resource.suffix);
+    // Add every known suffix to check if the charts exist
+    for (ConfigEditor::Resource resource : config->resources) {
+        resource.suffix.prepend(".");
 
-    for(const QString& airport : airports)
-    {
-        if(canceled) break;
+        if (!suffixes.contains(resource.suffix))
+            suffixes.append(resource.suffix);
+    }
 
-        qDebug() << "Downloading" << airport << "chart";
+    for (const QString &airport : airports) {
+        if (canceled) break;
 
-        // If the chart already exists
-        if(checkExists(config.path, airport, suffixes, config.openChart, config.openFolder))
-        {
-            // Go to the next airport
+        qDebug() << "Downloading" << airport << "charts";
+
+        if (checkExists(airport, suffixes)) {
+            // Set the index for the next airport
             index++;
 
             // If there is another airport, delay 3 seconds
-            if(index < airports.size()) wait3Seconds();
+            if (index < airports.size())
+                wait3Seconds();
 
             // Go to the next airport
             continue;
         }
 
-        // Set the GUI
-        emit searchingForChart(airport);
+        emit searchingCharts(airport);
 
-        // Process GUI events
-        QCoreApplication::processEvents();
-
-        // Set internal indication
         bool found = false;
         bool oFailed = false;
 
-        for(const Config::Resource& resource : config.resources)
-        {
+        for (ConfigEditor::Resource resource : config->resources) {
+            resource.suffix.prepend(".");
+
             bool failed = false;
             oFailed = false;
 
             QString url;
 
             // Set the initial URL based on the resource type
-            // For normal, set the URL plus the suffix to check if it's available
             // For folder, just set the URL
-            if(resource.type) url = resource.url.arg(airport);
+            // For normal, set the URL plus the suffix to check if it's available
+            if (resource.type) url = resource.url.arg(airport);
             else url = resource.url.arg(airport) + resource.suffix;
 
             // Connect initially here to check if the URL is valid
@@ -132,17 +132,19 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
 
             result = curl_easy_perform(curl);
 
-            if(canceled) break;
+            if (canceled)
+                break;
 
             // If the URL isn't valid, go to the next resource
-            if(result != CURLE_OK) {
-                qDebug() << "Couldn't find the chart in" << url;
+            if (result != CURLE_OK) {
+                qDebug() << "Couldn't find the charts in" << url;
                 continue;
-            } else qDebug() << "Downloading from" << url;
+            } else {
+                qDebug() << "Downloading from" << url;
+            }
 
-            // If it's a normal resource
-            if(resource.type)
-            {
+            // If it's a folder resource
+            if (resource.type) {
                 QString html;
 
                 // Download the page
@@ -153,10 +155,14 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
 
                 result = curl_easy_perform(curl);
 
-                if(canceled) break;
+                if (canceled)
+                    break;
 
                 // If the download failed
-                if(result != CURLE_OK) { oFailed = true; break; }
+                if (result != CURLE_OK) {
+                    oFailed = true;
+                    break;
+                }
 
                 // Parse the HTML page
                 QGumboDocument doc = QGumboDocument::parse(html);
@@ -170,149 +176,162 @@ void Downloader::download(Config::ConfigStruct config, QStringList airports)
                 QStringList files;
 
                 // Check all links in the page
-                for(const QGumboNode& node : nodes)
-                {
-                    QCoreApplication::processEvents();
-
+                for (const QGumboNode &node : nodes) {
                     // Get the link
                     QString attr = node.getAttribute("href");
 
-                    // Add it if it points to a PDF file
-                    if(attr.endsWith(resource.suffix)) files.append(url + attr);
+                    // Add it if it points to the resource files suffix
+                    if (attr.endsWith(resource.suffix))
+                        files.append(url + attr);
                 }
 
                 // If empty, go to the next resource
-                if(files.isEmpty()) continue;
-                else found = true;
+                if (files.isEmpty()) {
+                    continue;
+                } else {
+                    found = true;
+                }
 
-                // Set the airport chart folder path
-                QString chartPath = config.path + airport + "/";
+                // Set the airport charts folder path
+                QString chartsPath = config->chartsPath + airport + "/";
 
-                // If the chart path couldn't be created
-                if(!QDir(chartPath).mkpath(".")) { oFailed = true; break; }
+                // If the charts path couldn't be created
+                if (!QDir(chartsPath).mkpath(".")) {
+                    oFailed = true;
+                    break;
+                }
 
-                for(const QString& file : files)
-                {
-                    QCoreApplication::processEvents();
-
+                for (const QString &file : files) {
                     // Get the chart file name by getting the last entry of the URL
                     // Which is the filename, then remove the extension.
                     QString chartName = file.split("/").last().remove(resource.suffix);
 
-                    emit downloadingFolderChart(airport, chartName);
+                    emit downloadingFolderCharts(airport, chartName);
 
                     // Download the PDF file
-                    failed = !downloadFile(file, chartPath + chartName + resource.suffix);
+                    failed = !downloadFile(file, chartsPath + chartName + resource.suffix);
 
-                    if(canceled) break;
+                    if (canceled)
+                        break;
 
-                    if(failed) break;
+                    if (failed)
+                        break;
                 }
 
-                if(canceled)
-                {
-                    // If canceled and remove files is set, delete the airport chart folder
-                    if(config.removeFiles) QDir(chartPath).removeRecursively();
+                if (canceled) {
+                    // If canceled, delete the airport charts folder
+                    QDir(chartsPath).removeRecursively();
                     break;
                 }
 
-                if(failed) { oFailed = true; break; }
+                if (failed) {
+                    oFailed = true;
+                    break;
+                }
 
-                emit finished(airport);
+                emit downloadFinished(airport);
 
-                // Open the airport chart folder
-                if(config.openChart) QDesktopServices::openUrl(QUrl::fromLocalFile(chartPath));
-
-                if(config.openFolder) QDesktopServices::openUrl(QUrl::fromLocalFile(config.path));
+                if (config->openCharts)
+                    QDesktopServices::openUrl(QUrl::fromLocalFile(chartsPath));
 
                 break;
-            }
-            else
-            {
-                emit downloadingChart(airport);
+            } else {
+                emit downloadingCharts(airport);
 
-                QCoreApplication::processEvents();
-
-                QString downloadPath = config.path + airport + resource.suffix;
+                QString downloadPath = config->chartsPath + airport + resource.suffix;
 
                 // If file download failed
                 failed = !downloadFile(url, downloadPath);
 
-                // Set the outer failed and break
-                if(failed) { oFailed = true; break; }
+                if (failed) {
+                    oFailed = true;
+                    break;
+                }
 
                 found = true;
 
-                emit finished(airport);
+                emit downloadFinished(airport);
 
-                // Open the chart file if downloaded
-                if(config.openChart) QDesktopServices::openUrl(QUrl::fromLocalFile(downloadPath));
-
-                if(config.openFolder) QDesktopServices::openUrl(QUrl::fromLocalFile(config.path));
+                if (config->openCharts)
+                    QDesktopServices::openUrl(QUrl::fromLocalFile(downloadPath));
 
                 break;
             }
         }
 
-        if(canceled) { emit processCanceled(); break; }
+        if (canceled) {
+            emit processCanceled();
+            break;
+        }
 
-        if(oFailed) downloadFailed(airport, result);
-        else if(!found) { qDebug() << "Couldn't find" << airport << "chart"; emit notFound(airport); }
-        else qDebug() << airport << "chart is downloaded";
+        if (oFailed) {
+            downloadError(airport, result);
+        } else if (!found) {
+            qDebug() << "Couldn't find" << airport << "charts";
+            emit chartsNotFound(airport);
+        } else {
+            qDebug() << airport << "charts were downloaded";
+        }
 
         // Go to the next airport
         index++;
 
         // Delay 3 seconds if there is another airport
-        if(index < airports.size()) wait3Seconds();
-        else emit processFinished();
+        if (index < airports.size()) {
+            wait3Seconds();
+        } else {
+            if (config->openFolder)
+                QDesktopServices::openUrl(QUrl::fromLocalFile(config->chartsPath));
+
+            emit processFinished();
+        }
     }
 
     running = false;
 }
 
-bool Downloader::checkExists(QString path, QString airport, QStringList suffixes, bool openChart, bool openFolder)
+bool Downloader::checkExists(QString airport, QStringList suffixes)
 {
-    for(const QString& suffix : suffixes)
-    {
-        // If a PDF file with the airport name exists
-        if(QFileInfo(path + airport + suffix).exists())
-        {
-            qDebug() << airport << "chart' file already exists";
+    for (const QString &suffix : suffixes) {
+        // If file with the airport name and resource suffix exists
+        if (QFileInfo(config->chartsPath + airport + suffix).exists()) {
+            qDebug() << airport << "charts file already exists";
 
-            emit exists(airport);
+            emit chartsExists(airport);
 
-            // Open it if open chart is set
-            if(openChart) QDesktopServices::openUrl(QUrl::fromLocalFile(path + airport + suffix));
+            if (config->openCharts)
+                QDesktopServices::openUrl(QUrl::fromLocalFile(config->chartsPath + airport + suffix));
 
-            if(openFolder) QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+            if (config->openFolder)
+                QDesktopServices::openUrl(QUrl::fromLocalFile(config->chartsPath));
 
             return true;
         }
     }
 
     // If a folder with the airport name exists
-    if(QFileInfo(path + airport).exists())
-    {
-        qDebug() << airport << "chart folder already exists";
+    if (QFileInfo(config->chartsPath + airport).exists()) {
+        qDebug() << airport << "charts folder already exists";
 
-        emit exists(airport);
+        emit chartsExists(airport);
 
-        if(openChart) QDesktopServices::openUrl(QUrl::fromLocalFile(path + airport));
+        if (config->openCharts)
+            QDesktopServices::openUrl(QUrl::fromLocalFile(config->chartsPath + airport));
 
-        if(openFolder) QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+        if (config->openFolder)
+            QDesktopServices::openUrl(QUrl::fromLocalFile(config->chartsPath));
 
         return true;
-    }
-    else return false;
+    } else return false;
 }
 
 bool Downloader::downloadFile(QString url, QString filePath)
-{ 
+{
     QFile file(filePath);
 
     // If the file didn't open, return failed
-    if(!file.open(QIODevice::WriteOnly)) return false;
+    if (!file.open(QIODevice::WriteOnly))
+        return false;
 
     showProgress = true;
     curl_easy_setopt(curl, CURLOPT_URL, url.toStdString().c_str());
@@ -329,15 +348,19 @@ bool Downloader::downloadFile(QString url, QString filePath)
     // Close the file
     file.close();
 
-    if(result == CURLE_OK) qDebug() << chartName << "is downloaded";
-    // If aborted, remove the file as it's invalid
-    else if(result == CURLE_ABORTED_BY_CALLBACK) file.remove();
-    else qDebug() << "Couldn't download" << chartName;
+    if (result == CURLE_OK) {
+        qDebug() << chartName << "was downloaded";
+        // If aborted, remove the file as it's invalid
+    } else if (result == CURLE_ABORTED_BY_CALLBACK) {
+        file.remove();
+    } else {
+        qDebug() << "Couldn't download" << chartName;
+    }
 
     return result == CURLE_OK;
 }
 
-void Downloader::downloadFailed(QString airport, CURLcode errorCode)
+void Downloader::downloadError(QString airport, CURLcode errorCode)
 {
     // Get a readable error
     QString error = curl_easy_strerror(errorCode);
@@ -345,7 +368,7 @@ void Downloader::downloadFailed(QString airport, CURLcode errorCode)
     // Write the detailed error message in the log
     qDebug() << "Error:" << error << errorBuffer;
 
-    emit failed(airport, error);
+    emit downloadFailed(airport, error);
 }
 
 void Downloader::wait3Seconds()
@@ -360,7 +383,7 @@ void Downloader::wait3Seconds()
 
 void Downloader::cancel()
 {
-    qDebug() << "Download is canceled";
+    qDebug() << "Download was canceled";
 
     canceled = true;
 }

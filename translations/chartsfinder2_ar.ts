@@ -1,70 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ar_EG">
+<TS version="2.1" language="ar_EG" sourcelanguage="en_US">
 <context>
     <name>AddDialog</name>
     <message>
         <location filename="../src/adddialog.ui" line="14"/>
-        <source>Add a resource</source>
+        <source>Resource addition</source>
         <translation>إضافة مصدر</translation>
     </message>
     <message>
-        <location filename="../src/adddialog.ui" line="22"/>
+        <location filename="../src/adddialog.ui" line="20"/>
         <source>Resource URL:</source>
         <translation>رابط المصدر:</translation>
     </message>
     <message>
-        <location filename="../src/adddialog.ui" line="43"/>
+        <location filename="../src/adddialog.ui" line="27"/>
         <source>Resource type:</source>
         <translation>نوع المصدر:</translation>
     </message>
     <message>
-        <location filename="../src/adddialog.ui" line="51"/>
+        <location filename="../src/adddialog.ui" line="73"/>
         <source>Normal</source>
         <translation>عادي</translation>
     </message>
     <message>
-        <location filename="../src/adddialog.ui" line="56"/>
+        <location filename="../src/adddialog.ui" line="78"/>
         <source>Folder</source>
         <translation>مجلد</translation>
     </message>
     <message>
-        <location filename="../src/adddialog.ui" line="68"/>
+        <location filename="../src/adddialog.ui" line="86"/>
         <source>Resource files suffix:</source>
         <translation>لاحقة ملفات المصدر:</translation>
     </message>
     <message>
-        <location filename="../src/adddialog.ui" line="89"/>
+        <location filename="../src/adddialog.ui" line="93"/>
         <source>Resource order:</source>
         <translation>ترتيب المصدر:</translation>
     </message>
     <message>
-        <location filename="../src/adddialog.ui" line="105"/>
-        <source>Enter the required informations.</source>
-        <translation>أدخل المعلومات المطلوبة.</translation>
-    </message>
-    <message>
-        <location filename="../src/adddialog.ui" line="114"/>
+        <location filename="../src/adddialog.ui" line="37"/>
         <source>Cancel</source>
         <translation>ألغِ</translation>
     </message>
     <message>
-        <location filename="../src/adddialog.ui" line="128"/>
+        <location filename="../src/adddialog.ui" line="48"/>
         <source>Add</source>
         <translation>أضف</translation>
     </message>
     <message>
-        <location filename="../src/adddialog.cpp" line="19"/>
+        <location filename="../src/adddialog.cpp" line="21"/>
         <source>The resource URL can&apos;t be empty.</source>
         <translation>لا يمكن أن يكون رابط المصدر فارغاً.</translation>
     </message>
     <message>
-        <location filename="../src/adddialog.cpp" line="24"/>
+        <location filename="../src/adddialog.cpp" line="25"/>
         <source>The resource URL format is incorrect.</source>
         <translation>صيغة رابط المصدر غير صحيحة.</translation>
     </message>
     <message>
-        <location filename="../src/adddialog.cpp" line="33"/>
+        <location filename="../src/adddialog.cpp" line="32"/>
         <source>The resource files suffix can&apos;t be empty.</source>
         <translation>لا يمكن أن تكون لاحقة ملفات المصدر فارغة.</translation>
     </message>
@@ -72,334 +67,334 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.ui" line="56"/>
+        <location filename="../src/mainwindow.ui" line="50"/>
         <source>Enter ICAO codes:</source>
         <translation>أدخل رموز ICAO:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="63"/>
+        <location filename="../src/mainwindow.ui" line="57"/>
         <source>Seperate with spaces</source>
         <translation>افصل بمسافات</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="92"/>
-        <location filename="../src/mainwindow.cpp" line="179"/>
-        <location filename="../src/mainwindow.cpp" line="188"/>
+        <location filename="../src/mainwindow.ui" line="76"/>
+        <location filename="../src/mainwindow.cpp" line="209"/>
+        <location filename="../src/mainwindow.cpp" line="233"/>
         <source>Get charts</source>
         <translation>نزِّل الخرائط</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="120"/>
+        <location filename="../src/mainwindow.cpp" line="165"/>
         <source>Cancel</source>
         <translation>ألغِ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="128"/>
+        <location filename="../src/mainwindow.ui" line="110"/>
         <source>Settings</source>
         <translation>الإعدادات</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="137"/>
+        <location filename="../src/mainwindow.ui" line="119"/>
         <source>About</source>
         <translation>حول</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="146"/>
+        <location filename="../src/mainwindow.ui" line="128"/>
         <source>Check for updates</source>
         <translation>تحقق من التحديثات</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="106"/>
+        <location filename="../src/mainwindow.cpp" line="34"/>
         <source>Warning: Couldn&apos;t initialize the downloader!</source>
         <translation>تحذير: لم يمكن تهيئة برنامج التنزيل!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="115"/>
-        <source>%1 chart already exists.</source>
-        <translation>خريطة %1 موجودة مسبقاً.</translation>
+        <location filename="../src/mainwindow.cpp" line="94"/>
+        <source>Updater initialization</source>
+        <translation>تهيئة المحدث</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="126"/>
-        <source>Searching for %1 chart...</source>
-        <translation>جارٍ البحث عن خريطة %1...</translation>
+        <location filename="../src/mainwindow.cpp" line="94"/>
+        <source>Couldn&apos;t initialize the updater.</source>
+        <translation>لم يمكن تهيئة المحدث.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="131"/>
-        <source>Downloading %1 chart...</source>
-        <translation>جارٍ تنزيل خريطة %1...</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="138"/>
-        <source>Downloading %1 %2 chart...</source>
-        <translation>جارٍ تحميل خريطة %2 لـ%1...</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="152"/>
-        <source>%1 chart is downloaded.</source>
-        <translation>نُزّلت خريطة %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="161"/>
-        <source>Couldn&apos;t find %1 chart.</source>
-        <translation>لم يمكن العثور على خريطة %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="168"/>
-        <source>Couldn&apos;t download %1 chart. The following error happened:
-</source>
-        <translation>لم يمكن تنزيل خريطة %1. حدث الخطأ التالي:
-</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="184"/>
-        <source>The download process is canceled.</source>
-        <translation>أُلغيت عملية التنزيل.</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="221"/>
-        <source>Couldn&apos;t download the charts: Couldn&apos;t create the charts folder.</source>
-        <translation>لم يمكن تنزيل الخرائط: لم يمكن إنشاء مجلد الخرائط.</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="247"/>
-        <source>About Charts Finder</source>
-        <translation>عن Charts Finder</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="247"/>
+        <location filename="../src/mainwindow.cpp" line="147"/>
         <source>Charts Finder
-A tool to get airports chart for your flights.
+An app to get IFR charts for your flights.
 Version: %1
 Release date: %2
 Copyright © Abdullah Radwan</source>
-        <translation>برنامج Charts Finder
-أداة للحصول على خرائط المطارات لرحلاتك.
+        <translation>Charts Finder
+تطبيق للحصول على خرائط IFR لرحلاتك.
 الإصدار: %1
 تاريخ الإصدار: %2
 جميع الحقوق محفوظة © عبدالله رضوان</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="263"/>
+        <location filename="../src/mainwindow.cpp" line="160"/>
+        <source>%1 charts already exists.</source>
+        <translation>خرائط %1 موجودة مسبقاً.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="169"/>
+        <source>Searching for %1 charts...</source>
+        <translation>جارٍ البحث عن خرائط %1...</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="174"/>
+        <source>Downloading %1 charts...</source>
+        <translation>جارٍ تنزيل خرائط %1...</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="196"/>
+        <source>%1 charts were downloaded.</source>
+        <translation>نُزّلت خرائط %1.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="214"/>
+        <source>Couldn&apos;t find %1 charts.</source>
+        <translation>لم يمكن العثور على خرائط %1.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="221"/>
+        <source>Couldn&apos;t download %1 charts. The following error happened:
+</source>
+        <translation>لم يمكن تنزيل خرائط %1. حدث الخطأ التالي:
+</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="181"/>
+        <source>Downloading %1 %2 chart...</source>
+        <translation>جارٍ تحميل خريطة %2 لـ%1...</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="125"/>
+        <source>Couldn&apos;t download the charts: Couldn&apos;t create the charts folder.</source>
+        <translation>لم يمكن تنزيل الخرائط: لم يمكن إنشاء مجلد الخرائط.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="147"/>
+        <source>About Charts Finder</source>
+        <translation>عن Charts Finder</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="229"/>
+        <source>The download process was canceled.</source>
+        <translation>أُلغيت عملية التنزيل.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="242"/>
         <source>Are you sure you want to quit?</source>
         <translation>أمتأكد من أنك تريد الخروج؟</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="264"/>
+        <location filename="../src/mainwindow.cpp" line="243"/>
         <source>Are you sure you want to quit? There are downloads in progress.</source>
         <translation>أمتأكد من أنك تريد الخروج؟ هناك تنزيلات جارية.</translation>
     </message>
 </context>
 <context>
-    <name>SettingsWindow</name>
+    <name>SettingsDialog</name>
     <message>
-        <location filename="../src/settingswindow.ui" line="14"/>
-        <source>Settings - Charts Finder</source>
-        <translation>الإعدادات - Charts Finder</translation>
+        <location filename="../src/settingsdialog.ui" line="14"/>
+        <source>Settings</source>
+        <translation>الإعدادات</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.ui" line="28"/>
+        <location filename="../src/settingsdialog.ui" line="24"/>
         <source>General</source>
         <translation>عام</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.ui" line="36"/>
-        <source>Language:</source>
-        <translation>اللغة:</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.ui" line="50"/>
-        <source>Check for updates every:</source>
-        <translation>تحقق من التحديثات كل:</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.ui" line="58"/>
-        <source>3 days</source>
-        <translation>3 أيام</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.ui" line="63"/>
-        <source>7 days</source>
-        <translation>7 أيام</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.ui" line="68"/>
-        <source>14 days</source>
-        <translation>14 يوماً</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.ui" line="73"/>
-        <source>Never</source>
-        <translation>مطلقاً</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.ui" line="91"/>
-        <source>Charts folder:</source>
-        <translation>مجلد الخرائط:</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.ui" line="116"/>
+        <location filename="../src/settingsdialog.ui" line="110"/>
         <source>Change</source>
         <translation>غيّر</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.ui" line="135"/>
-        <source>Open the chart after download</source>
-        <translation>افتح الخريطة بعد تنزيلها</translation>
+        <location filename="../src/settingsdialog.ui" line="50"/>
+        <source>Charts folder:</source>
+        <translation>مجلد الخرائط:</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.ui" line="145"/>
+        <location filename="../src/settingsdialog.ui" line="63"/>
+        <source>Language:</source>
+        <translation>اللغة:</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsdialog.ui" line="43"/>
+        <source>Check for updates:</source>
+        <translation>تحقق من التحديثات:</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsdialog.ui" line="33"/>
+        <source>Open the charts after download</source>
+        <translation>افتح الخرائط بعد تنزيلها</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsdialog.ui" line="71"/>
+        <source>Every 7 days</source>
+        <translation>كل ٧ أيام</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsdialog.ui" line="76"/>
+        <source>Every 14 days</source>
+        <translation>كل ١٤ يوماً</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsdialog.ui" line="81"/>
+        <source>Every month</source>
+        <translation>كل شهر</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsdialog.ui" line="86"/>
+        <source>Never</source>
+        <translation>لا</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsdialog.ui" line="94"/>
         <source>Open the charts folder after download</source>
         <translation>افتح مجلد الخرائط بعد التنزيل</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.ui" line="155"/>
-        <source>For folder charts only</source>
-        <translation>لخرائط المجلد فقط</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.ui" line="158"/>
-        <source>Remove the downloaded charts after cancellation</source>
-        <translation>احذف الخرائط المنزّلة بعد الإلغاء</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.ui" line="166"/>
+        <location filename="../src/settingsdialog.ui" line="122"/>
         <source>Resources</source>
         <translation>المصادر</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.ui" line="188"/>
+        <location filename="../src/settingsdialog.ui" line="144"/>
         <source>Resource</source>
         <translation>المصدر</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.ui" line="193"/>
+        <location filename="../src/settingsdialog.ui" line="149"/>
         <source>Type</source>
         <translation>النوع</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.ui" line="198"/>
+        <location filename="../src/settingsdialog.ui" line="154"/>
         <source>Files suffix</source>
         <translation>لاحقة الملفات</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.ui" line="214"/>
-        <source>Add</source>
-        <translation>أضف</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.ui" line="231"/>
+        <location filename="../src/settingsdialog.ui" line="170"/>
         <source>Remove</source>
         <translation>احذف</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.ui" line="252"/>
+        <location filename="../src/settingsdialog.ui" line="187"/>
+        <source>Add</source>
+        <translation>أضف</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsdialog.ui" line="204"/>
         <source>Up</source>
         <translation>إلى الأعلى</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.ui" line="269"/>
+        <location filename="../src/settingsdialog.ui" line="221"/>
         <source>Down</source>
         <translation>إلى الأسفل</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.ui" line="290"/>
+        <location filename="../src/settingsdialog.ui" line="242"/>
         <source>Reset</source>
         <translation>أعد الضبط</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="25"/>
-        <location filename="../src/settingswindow.cpp" line="117"/>
+        <location filename="../src/settingsdialog.cpp" line="20"/>
+        <location filename="../src/settingsdialog.cpp" line="132"/>
         <source>Charts folder: </source>
         <translation>مجلد الخرائط: </translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="41"/>
+        <location filename="../src/settingsdialog.cpp" line="35"/>
         <source>System language: %1</source>
         <translation>لغة النظام: %1</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="78"/>
-        <source>You must restart the application</source>
-        <translation>يجب أن تعيد تشغيل التطبيق</translation>
+        <location filename="../src/settingsdialog.cpp" line="76"/>
+        <source>Application restart</source>
+        <translation>إعادة تشغيل التطبيق</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="78"/>
-        <source>You must restart the application to change the language.</source>
-        <translation>يجب أن تعيد تشغيل التطبيق لتغيير اللغة.</translation>
+        <location filename="../src/settingsdialog.cpp" line="77"/>
+        <source>The application must be restarted to change the language. Do you want to restart now?</source>
+        <translation>يجب أن يُعاد تشغيل التطبيق لتغيير اللغة. أتريد إعادة التشغيل الآن؟</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="107"/>
+        <location filename="../src/settingsdialog.cpp" line="120"/>
         <source>Choose the charts folder</source>
         <translation>اختر مجلد الخرائط</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="201"/>
+        <location filename="../src/settingsdialog.cpp" line="164"/>
+        <location filename="../src/settingsdialog.cpp" line="217"/>
+        <location filename="../src/settingsdialog.cpp" line="249"/>
+        <source>Folder</source>
+        <translation>مجلد</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsdialog.cpp" line="164"/>
+        <location filename="../src/settingsdialog.cpp" line="217"/>
+        <location filename="../src/settingsdialog.cpp" line="249"/>
+        <source>Normal</source>
+        <translation>عادي</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsdialog.cpp" line="186"/>
+        <source>The resource %1 was added.</source>
+        <translation>أضُيف المصدر %1.</translation>
+    </message>
+    <message>
+        <location filename="../src/settingsdialog.cpp" line="213"/>
         <source>The resource type must be in English. Enter &apos;Normal&apos; for normal resources, or &apos;Folder&apos; for folder resources.</source>
         <comment>Don&apos;t translate &apos;Normal&apos; and &apos;Folder&apos;.</comment>
         <translation>يجب أن يكون نوع المصدر بالإنجليزية. أدخل &quot;Normal&quot; للمصادر العادية، أو&quot;Folder&quot; لمصادر المجلد.</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="150"/>
-        <location filename="../src/settingswindow.cpp" line="205"/>
-        <location filename="../src/settingswindow.cpp" line="241"/>
-        <source>Normal</source>
-        <translation>عادي</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.cpp" line="150"/>
-        <location filename="../src/settingswindow.cpp" line="205"/>
-        <location filename="../src/settingswindow.cpp" line="241"/>
-        <source>Folder</source>
-        <translation>مجلد</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.cpp" line="216"/>
+        <location filename="../src/settingsdialog.cpp" line="226"/>
         <source>The resource URL can&apos;t be empty.</source>
         <translation>لا يمكن أن يكون رابط المصدر فارغاً.</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="226"/>
+        <location filename="../src/settingsdialog.cpp" line="234"/>
         <source>The resource URL format is incorrect.</source>
         <translation>صيغة رابط المصدر غير صحيحة.</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="247"/>
+        <location filename="../src/settingsdialog.cpp" line="254"/>
         <source>The resource files suffix can&apos;t be empty.</source>
         <translation>لا يمكن أن تكون لاحقة ملفات المصدر فارغة.</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="175"/>
-        <source>The resource %1 is added.</source>
-        <translation>أضُيف المصدر %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/settingswindow.cpp" line="287"/>
-        <source>The resource %1 is removed.</source>
+        <location filename="../src/settingsdialog.cpp" line="293"/>
+        <source>The resource %1 was removed.</source>
         <translation>حُذف المصدر %1.</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="319"/>
-        <source>The resource %1 is moved up.</source>
+        <location filename="../src/settingsdialog.cpp" line="325"/>
+        <source>The resource %1 was moved up.</source>
         <translation>نُقل المصدر %1 إلى الأعلى.</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="345"/>
-        <source>The resource %1 is moved down.</source>
+        <location filename="../src/settingsdialog.cpp" line="351"/>
+        <source>The resource %1 was moved down.</source>
         <translation>نُقل المصدر %1 إلى الأسفل.</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="352"/>
+        <location filename="../src/settingsdialog.cpp" line="358"/>
         <source>Resetting the resources</source>
         <translation>إعادة ضبط المصادر</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="352"/>
+        <location filename="../src/settingsdialog.cpp" line="359"/>
         <source>Are you sure you want to reset the resources?</source>
         <translation>أمتأكد من أنك تريد إعادة ضبط المصادر؟</translation>
     </message>
     <message>
-        <location filename="../src/settingswindow.cpp" line="371"/>
-        <source>The resources are reset.</source>
+        <location filename="../src/settingsdialog.cpp" line="366"/>
+        <source>The resources were reset.</source>
         <translation>أُعيد ضبط المصادر.</translation>
     </message>
 </context>

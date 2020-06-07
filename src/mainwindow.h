@@ -1,14 +1,17 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include "settingsdialog.h"
 #include "downloader.h"
-#include <UpdateController>
-#include <QTranslator>
-#include <QLocale>
+
+#include <QMainWindow>
+#include <QtAutoUpdaterWidgets>
+#include <QThread>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -16,40 +19,46 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-
+    MainWindow(ConfigEditor::Config *config);
     ~MainWindow();
+
+signals:
+    void download(QStringList airports);
 
 private slots:
     void on_getButton_clicked();
+    void on_airportsEdit_returnPressed();
 
     void on_actionSettings_triggered();
-
+    void on_actionCheck_triggered();
     void on_actionAbout_triggered();
 
-    void on_icaoEdit_returnPressed();
+    void onChartsExists(QString airport);
+    void onSearchingCharts(QString airport);
+    void onDownloadingCharts(QString airport);
+    void onDownloadingFolderCharts(QString airport, QString chart);
+    void onDownloadProgress(double received, double total);
+    void onDownloadFinished(QString airport);
+    void onProcessFinished();
 
-    void on_actionCheck_for_updates_triggered();
+    void onChartsNotFound(QString airport);
+    void onDownloadFailed(QString airport, QString error);
+    void onProcessCanceled();
 
 private:
+    ConfigEditor::Config *config;
     Ui::MainWindow *ui;
+    QtAutoUpdater::Updater *updater;
+    SettingsDialog settingsDialog;
 
-    Downloader* downloader;
+    Downloader *downloader;
+    QThread downloaderThread;
 
-    QtAutoUpdater::Updater* updater;
-
-    Config::ConfigStruct config;
-
-    QTranslator* qtTranslator;
-    QTranslator* translator;
-    QTranslator* autoUpdaterTranslator;
-    QLocale locale;
-
-    void setTranslator();
     void setDownloader();
-    void checkForUpdates();
+    void setUpdater();
+    void checkUpdates();
 
-    void closeEvent(QCloseEvent *bar);
+    void closeEvent(QCloseEvent *bar) override;
 };
 
 #endif // MAINWINDOW_H

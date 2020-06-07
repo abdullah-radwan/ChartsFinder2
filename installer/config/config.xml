@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Installer>
     <Name>Charts Finder</Name>
-    <Version>2.2.2</Version>
+    <Version>2.3</Version>
     <Title>Charts Finder 2 Installer</Title>
     <Publisher>Abdullah Radwan</Publisher>
-    <InstallerWindowIcon>../res/icons/icon</InstallerWindowIcon>
+    <InstallerApplicationIcon>../../res/icon</InstallerApplicationIcon>
+	<InstallerWindowIcon>../../res/icon</InstallerWindowIcon>
     <StartMenuDir>Charts Finder 2</StartMenuDir>
     <TargetDir>@ApplicationsDirX86@/Charts Finder 2</TargetDir>
 	<RemoteRepositories>
      <Repository>
-		<Url>https://chartsfinder.000webhostapp.com/installer/win</Url>
+		<Url>https://raw.githubusercontent.com/abdullah-radwan/ChartsFinder2/master/installer/repository/win</Url>
         <Enabled>1</Enabled>
-        <DisplayName>Windows repository</DisplayName>
-     </Repository>
-	 <Repository>
-		<Url>https://chartsfinder.000webhostapp.com/installer/lin</Url>
-        <Enabled>0</Enabled>
-        <DisplayName>Linux repository</DisplayName>
+        <DisplayName>Main Repository</DisplayName>
      </Repository>
 	</RemoteRepositories>
 </Installer>

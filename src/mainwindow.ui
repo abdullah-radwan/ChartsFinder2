@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>369</width>
-    <height>233</height>
+    <width>365</width>
+    <height>241</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string notr="true">Charts Finder</string>
-  </property>
   <property name="windowIcon">
-   <iconset resource="res.qrc">
-    <normaloff>:/res/icons/icon.svg</normaloff>:/res/icons/icon.svg</iconset>
+   <iconset resource="../res/res.qrc">
+    <normaloff>:/icon.svg</normaloff>:/icon.svg</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton { text-align:center }</string>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -24,14 +24,8 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="imageLabel">
-      <property name="text">
-       <string/>
-      </property>
       <property name="pixmap">
-       <pixmap resource="res.qrc">:/res/icons/icon.svg</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>false</bool>
+       <pixmap resource="../res/res.qrc">:/icon.svg</pixmap>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -49,7 +43,7 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="icaoLayout">
+     <layout class="QHBoxLayout" name="airportsLayout">
       <item>
        <widget class="QLabel" name="enterLabel">
         <property name="text">
@@ -58,7 +52,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="icaoEdit">
+       <widget class="QLineEdit" name="airportsEdit">
         <property name="placeholderText">
          <string>Seperate with spaces</string>
         </property>
@@ -67,21 +61,11 @@
      </layout>
     </item>
     <item>
-     <widget class="QLabel" name="downloadLabel">
-      <property name="visible">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
      <widget class="QProgressBar" name="progressBar">
       <property name="visible">
        <bool>false</bool>
       </property>
-      <property name="value">
+      <property name="maximum">
        <number>0</number>
       </property>
      </widget>
@@ -92,13 +76,10 @@
        <string>Get charts</string>
       </property>
       <property name="icon">
-       <iconset resource="res.qrc">
-        <normaloff>:/res/icons/download.svg</normaloff>:/res/icons/download.svg</iconset>
+       <iconset resource="../res/res.qrc">
+        <normaloff>:/download.svg</normaloff>:/download.svg</iconset>
       </property>
       <property name="autoDefault">
-       <bool>false</bool>
-      </property>
-      <property name="default">
        <bool>true</bool>
       </property>
      </widget>
@@ -113,16 +94,17 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionSettings"/>
-   <addaction name="actionCheck_for_updates"/>
+   <addaction name="actionCheck"/>
    <addaction name="actionAbout"/>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionSettings">
    <property name="checkable">
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="res.qrc">
-     <normaloff>:/res/icons/settings.svg</normaloff>:/res/icons/settings.svg</iconset>
+    <iconset resource="../res/res.qrc">
+     <normaloff>:/settings.svg</normaloff>:/settings.svg</iconset>
    </property>
    <property name="text">
     <string>Settings</string>
@@ -130,17 +112,17 @@
   </action>
   <action name="actionAbout">
    <property name="icon">
-    <iconset resource="res.qrc">
-     <normaloff>:/res/icons/about.svg</normaloff>:/res/icons/about.svg</iconset>
+    <iconset resource="../res/res.qrc">
+     <normaloff>:/about.svg</normaloff>:/about.svg</iconset>
    </property>
    <property name="text">
     <string>About</string>
    </property>
   </action>
-  <action name="actionCheck_for_updates">
+  <action name="actionCheck">
    <property name="icon">
-    <iconset resource="res.qrc">
-     <normaloff>:/res/icons/update.svg</normaloff>:/res/icons/update.svg</iconset>
+    <iconset resource="../res/res.qrc">
+     <normaloff>:/update.svg</normaloff>:/update.svg</iconset>
    </property>
    <property name="text">
     <string>Check for updates</string>
@@ -149,7 +131,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="res.qrc"/>
+  <include location="../res/res.qrc"/>
  </resources>
  <connections/>
 </ui>
