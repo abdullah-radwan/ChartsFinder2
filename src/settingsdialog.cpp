@@ -40,7 +40,7 @@ void SettingsDialog::setLangCombo()
     // Add English
     ui->langCombo->addItem("English");
 
-    ui->langCombo->setItemData(1, "English");
+    ui->langCombo->setItemData(1, "en");
 
     // Get the available translations from the existing translations files
     QStringList fileNames = QDir(qApp->applicationDirPath() + "/translations").entryList(
@@ -63,6 +63,8 @@ void SettingsDialog::setLangCombo()
     // Set the index to the active language
     if (config->language == "System") {
         ui->langCombo->setCurrentIndex(0);
+    } else if (config->language == "en") {
+        ui->langCombo->setCurrentIndex(1);
     } else {
         ui->langCombo->setCurrentText(QLocale(config->language).nativeLanguageName());
     }

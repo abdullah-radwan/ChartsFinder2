@@ -58,8 +58,8 @@ int main(int argc, char *argv[])
     QTranslator qtTranslator, translator, updaterTranslator;
 
     // No need to translate if the language is English, or the system language is English
-    if (configEditor.config.language != "English" || (configEditor.config.language == "System"
-                                                      && QLocale::system().language() != QLocale::English)) {
+    if (!(configEditor.config.language == "en" || (configEditor.config.language == "System"
+                                                      && QLocale::system().language() == QLocale::English))) {
         qDebug() << "Setting translators";
 
         // Set the system locale

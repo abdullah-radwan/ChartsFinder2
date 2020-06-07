@@ -12,14 +12,14 @@
   <ForcedInstallation>true</ForcedInstallation>
   <Essential>true</Essential>
   <Script>installscript.qs</Script>
-  <UpdateFile CompressedSize="1906984" UncompressedSize="5648181" OS="Any"/>
+  <UpdateFile UncompressedSize="5648181" CompressedSize="1907053" OS="Any"/>
   <DownloadableArchives>chartsfinder2.7z</DownloadableArchives>
   <Licenses>
-   <License file="GPL v3.txt" name="GPL v3"/>
-   <License file="SIL Open Font v1.1.txt" name="SIL Open Font v1.1"/>
-   <License file="MIT.txt" name="MIT"/>
+   <License name="GPL v3" file="GPL v3.txt"/>
+   <License name="SIL Open Font v1.1" file="SIL Open Font v1.1.txt"/>
+   <License name="MIT" file="MIT.txt"/>
   </Licenses>
-  <SHA1>b686ccb5f888cd96039e2ae8df77f00301a45d1a</SHA1>
+  <SHA1>b2b01213a0f0a8dd22fd314358aaf62227321b99</SHA1>
  </PackageUpdate>
  <PackageUpdate>
   <Name>qt5</Name>
@@ -31,10 +31,10 @@
   <ForcedInstallation>true</ForcedInstallation>
   <Essential>true</Essential>
   <Script>installscript.qs</Script>
-  <UpdateFile CompressedSize="15976865" UncompressedSize="66186191" OS="Any"/>
+  <UpdateFile UncompressedSize="66186191" CompressedSize="15976865" OS="Any"/>
   <DownloadableArchives>qt5.7z</DownloadableArchives>
   <Licenses>
-   <License file="LGPL v3.txt" name="LGPL v3"/>
+   <License name="LGPL v3" file="LGPL v3.txt"/>
   </Licenses>
   <SHA1>7a347908ebc9401520320f66cc39235091550692</SHA1>
  </PackageUpdate>
