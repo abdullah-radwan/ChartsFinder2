@@ -73,12 +73,8 @@ void SettingsDialog::setLangCombo()
 
 void SettingsDialog::onLanguageChange()
 {
-    if (QMessageBox::question(this, tr("Application restart"),
-            tr("The application must be restarted to change the language. Do you want to restart now?")) == QMessageBox::Yes)
-    {
-        close();
-        qApp->exit(1111);
-    }
+    QMessageBox::information(this, tr("Application restart"),
+                             tr("The application must be restarted to change the language."));
 }
 
 int SettingsDialog::getUpdatePeriod()

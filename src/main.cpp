@@ -108,8 +108,5 @@ int main(int argc, char *argv[])
     logFile->close();
     delete logFile;
 
-    if (result == 1111)
-        QProcess::startDetached(QApplication::applicationFilePath());
-
     return result;
 }

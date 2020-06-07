@@ -298,7 +298,7 @@ Copyright © Abdullah Radwan</source>
     </message>
     <message>
         <location filename="../src/settingsdialog.cpp" line="20"/>
-        <location filename="../src/settingsdialog.cpp" line="132"/>
+        <location filename="../src/settingsdialog.cpp" line="128"/>
         <source>Charts folder: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -314,81 +314,81 @@ Copyright © Abdullah Radwan</source>
     </message>
     <message>
         <location filename="../src/settingsdialog.cpp" line="77"/>
-        <source>The application must be restarted to change the language. Do you want to restart now?</source>
+        <source>The application must be restarted to change the language.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="120"/>
+        <location filename="../src/settingsdialog.cpp" line="116"/>
         <source>Choose the charts folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="164"/>
-        <location filename="../src/settingsdialog.cpp" line="217"/>
-        <location filename="../src/settingsdialog.cpp" line="249"/>
+        <location filename="../src/settingsdialog.cpp" line="160"/>
+        <location filename="../src/settingsdialog.cpp" line="213"/>
+        <location filename="../src/settingsdialog.cpp" line="245"/>
         <source>Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="164"/>
-        <location filename="../src/settingsdialog.cpp" line="217"/>
-        <location filename="../src/settingsdialog.cpp" line="249"/>
+        <location filename="../src/settingsdialog.cpp" line="160"/>
+        <location filename="../src/settingsdialog.cpp" line="213"/>
+        <location filename="../src/settingsdialog.cpp" line="245"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="186"/>
+        <location filename="../src/settingsdialog.cpp" line="182"/>
         <source>The resource %1 was added.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="213"/>
+        <location filename="../src/settingsdialog.cpp" line="209"/>
         <source>The resource type must be in English. Enter &apos;Normal&apos; for normal resources, or &apos;Folder&apos; for folder resources.</source>
         <comment>Don&apos;t translate &apos;Normal&apos; and &apos;Folder&apos;.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="226"/>
+        <location filename="../src/settingsdialog.cpp" line="222"/>
         <source>The resource URL can&apos;t be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="234"/>
+        <location filename="../src/settingsdialog.cpp" line="230"/>
         <source>The resource URL format is incorrect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="254"/>
+        <location filename="../src/settingsdialog.cpp" line="250"/>
         <source>The resource files suffix can&apos;t be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="293"/>
+        <location filename="../src/settingsdialog.cpp" line="289"/>
         <source>The resource %1 was removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="325"/>
+        <location filename="../src/settingsdialog.cpp" line="321"/>
         <source>The resource %1 was moved up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="351"/>
+        <location filename="../src/settingsdialog.cpp" line="347"/>
         <source>The resource %1 was moved down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="358"/>
+        <location filename="../src/settingsdialog.cpp" line="354"/>
         <source>Resetting the resources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="359"/>
+        <location filename="../src/settingsdialog.cpp" line="355"/>
         <source>Are you sure you want to reset the resources?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/settingsdialog.cpp" line="366"/>
+        <location filename="../src/settingsdialog.cpp" line="362"/>
         <source>The resources were reset.</source>
         <translation type="unfinished"></translation>
     </message>
