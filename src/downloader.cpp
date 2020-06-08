@@ -52,6 +52,8 @@ Downloader::Downloader(ConfigEditor::Config *config)
     curl = curl_easy_init();
 
     if (curl) {
+        // Disable SSL certificate verification
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0);
         // Follow redirects
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
         // Fail if the server returns error code

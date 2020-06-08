@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.3.1 - 2020-06-08
+### Added
+- AIRAC change support to FltPlan resource.
+### Changed
+- Repository folder names.
+### Fixed
+- Can't download from HTTPS.
+- Old config path not read.
+### Removed
+- Old config resource support.
+
 ## 2.3 - 2020-06-07
 ### Fixed
 - Language doesn't change if English is selected.

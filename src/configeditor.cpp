@@ -14,9 +14,12 @@ void ConfigEditor::readConfig()
 
     settings.beginGroup("Settings");
 
-    // If not set, make it the documents folder
-    config.chartsPath = settings.value("ChartsPath",
-                                       QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/Charts/").toString();
+    config.chartsPath = settings.value("ChartsPath").toString();
+
+    if (config.chartsPath.isEmpty())
+        config.chartsPath = settings.value("Path",
+                                           QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+                                           + "/Charts/").toString();
 
     config.openCharts = settings.value("OpenCharts", true).toBool();
     config.openFolder = settings.value("OpenFolder", true).toBool();
@@ -28,29 +31,17 @@ void ConfigEditor::readConfig()
     // If the lastest check date plus the update period is lower than or equal to the current date, check updates
     config.checkUpdates = settings.value("CheckDate", 0).toDate().addDays(config.updatePeriod) <= QDate::currentDate();
 
-    // Get the resource as QVariant
-    QList<QVariant> vResources = settings.value("Resources").toList();
     config.resources = settings.value("Resources").value<QList<Resource>>();
 
-    if (config.resources.isEmpty() && !vResources.isEmpty()) {
-        // Copy values to the string resources list
-        for (const QVariant &var : vResources) {
-            QStringList resource = var.toStringList();
-
-            config.resources.append({resource.first(), resource.at(1) == "1", resource.last()});
-        }
-        // If no resources are exists
-    } else if (config.resources.isEmpty()) {
+    if (config.resources.isEmpty()) {
         resetResources(&config);
-    }
-
-    if (!config.resources.isEmpty() && config.resources.first().suffix.startsWith("."))
+    } else if (config.resources.first().suffix.startsWith("."))
     {
         for (Resource &resource : config.resources)
-        {
             resource.suffix.remove(0, 1);
-        }
     }
+
+    setFltPlan(&config);
 
     settings.endGroup();
 
@@ -97,6 +88,32 @@ void ConfigEditor::writeConfig()
     settings.endGroup();
 
     qDebug() << "Config was written";
+}
+
+void ConfigEditor::setFltPlan(ConfigEditor::Config* config)
+{
+loop:
+    for (Resource &resource : config->resources)
+    {
+        if (!resource.url.contains("imageserver.fltplan.com"))
+            continue;
+
+        QString oldMerge, merge;
+        // Get the section which has the date
+        merge = oldMerge = resource.url.split("/").at(4);
+
+        // Add 100 years because Qt identifies 20 as 1920
+        QDate date = QDate::fromString(merge.remove("merge"), "yyMMdd").addYears(100).addDays(28);
+
+        // If there is still days before the next AIRAC update
+        if (QDate::currentDate().daysTo(date) >= 0)
+            break;
+
+        merge = "merge" + date.toString("yyMMdd");
+        resource.url.replace(oldMerge, merge);
+
+        goto loop;
+    }
 }
 
 void ConfigEditor::resetResources(ConfigEditor::Config *config)

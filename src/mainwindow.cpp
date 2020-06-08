@@ -152,7 +152,7 @@ void MainWindow::on_actionAbout_triggered()
 
                                                            "Copyright © Abdullah Radwan")
                        // Set the version and the release date to the current locale
-                       .arg("2.3", locale().toString(QDate::fromString("7/6/2020", "d/M/yyyy"), "d MMMM yyyy")));
+                       .arg("2.3.1", locale().toString(QDate::fromString("8/6/2020", "d/M/yyyy"), "d MMMM yyyy")));
 }
 
 void MainWindow::onChartsExists(QString airport)

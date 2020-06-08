@@ -8,7 +8,7 @@ TEMPLATE = app
 
 TARGET = ChartsFinder2
 
-VERSION = 2.3
+VERSION = 2.3.1
 
 QT += core gui widgets autoupdaterwidgets
 

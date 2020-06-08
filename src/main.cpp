@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     // Install the message handler
     qInstallMessageHandler(messageHandler);
 
-    qDebug() << "Charts Finder 2.3, 7 June 2020";
+    qDebug() << "Charts Finder 2.3.1, 8 June 2020";
     qDebug() << "Current date:" << QDateTime::currentDateTime().toString("yyyy-MM-dd");
 
     // Init cURL

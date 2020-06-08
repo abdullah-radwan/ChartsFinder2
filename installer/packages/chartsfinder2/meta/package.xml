@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Charts Finder 2</DisplayName>
     <Description>Install Charts Finder 2.</Description>
-    <Version>2.3</Version>
-    <ReleaseDate>2020-06-07</ReleaseDate>
+    <Version>2.3.1</Version>
+    <ReleaseDate>2020-06-08</ReleaseDate>
     <Licenses>
         <License name="GPL v3" file="GPL v3.txt" />
 		<License name="SIL Open Font v1.1" file="SIL Open Font v1.1.txt" />

@@ -32,6 +32,7 @@ public:
         QPoint settingsPos;
     } config;
 
+    static void setFltPlan(ConfigEditor::Config* config);
     static void resetResources(ConfigEditor::Config* config);
 
 private:

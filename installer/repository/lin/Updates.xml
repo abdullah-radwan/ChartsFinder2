@@ -3,25 +3,6 @@
  <ApplicationVersion>1.0.0</ApplicationVersion>
  <Checksum>true</Checksum>
  <PackageUpdate>
-  <Name>chartsfinder2</Name>
-  <DisplayName>Charts Finder 2</DisplayName>
-  <Description>Install Charts Finder 2.</Description>
-  <Version>2.3</Version>
-  <ReleaseDate>2020-06-07</ReleaseDate>
-  <Default>true</Default>
-  <ForcedInstallation>true</ForcedInstallation>
-  <Essential>true</Essential>
-  <Script>installscript.qs</Script>
-  <UpdateFile UncompressedSize="5648181" CompressedSize="1907053" OS="Any"/>
-  <DownloadableArchives>chartsfinder2.7z</DownloadableArchives>
-  <Licenses>
-   <License name="GPL v3" file="GPL v3.txt"/>
-   <License name="SIL Open Font v1.1" file="SIL Open Font v1.1.txt"/>
-   <License name="MIT" file="MIT.txt"/>
-  </Licenses>
-  <SHA1>b2b01213a0f0a8dd22fd314358aaf62227321b99</SHA1>
- </PackageUpdate>
- <PackageUpdate>
   <Name>qt5</Name>
   <DisplayName>Qt 5 binaries</DisplayName>
   <Description>Install Qt 5 binaries.</Description>
@@ -31,11 +12,30 @@
   <ForcedInstallation>true</ForcedInstallation>
   <Essential>true</Essential>
   <Script>installscript.qs</Script>
-  <UpdateFile UncompressedSize="66186191" CompressedSize="15976865" OS="Any"/>
+  <UpdateFile OS="Any" UncompressedSize="66186191" CompressedSize="15976865"/>
   <DownloadableArchives>qt5.7z</DownloadableArchives>
   <Licenses>
-   <License name="LGPL v3" file="LGPL v3.txt"/>
+   <License file="LGPL v3.txt" name="LGPL v3"/>
   </Licenses>
   <SHA1>7a347908ebc9401520320f66cc39235091550692</SHA1>
+ </PackageUpdate>
+ <PackageUpdate>
+  <Name>chartsfinder2</Name>
+  <DisplayName>Charts Finder 2</DisplayName>
+  <Description>Install Charts Finder 2.</Description>
+  <Version>2.3.1</Version>
+  <ReleaseDate>2020-06-08</ReleaseDate>
+  <Default>true</Default>
+  <ForcedInstallation>true</ForcedInstallation>
+  <Essential>true</Essential>
+  <Script>installscript.qs</Script>
+  <UpdateFile OS="Any" UncompressedSize="5652085" CompressedSize="1908926"/>
+  <DownloadableArchives>chartsfinder2.7z</DownloadableArchives>
+  <Licenses>
+   <License file="GPL v3.txt" name="GPL v3"/>
+   <License file="SIL Open Font v1.1.txt" name="SIL Open Font v1.1"/>
+   <License file="MIT.txt" name="MIT"/>
+  </Licenses>
+  <SHA1>7d6e426e7e60f6798d325c7bb5c97c335a019ac4</SHA1>
  </PackageUpdate>
 </Updates>

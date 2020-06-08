@@ -358,6 +358,7 @@ void SettingsDialog::on_resetButton_clicked()
         qDebug() << "Resetting resources";
 
         ConfigEditor::resetResources(config);
+        ConfigEditor::setFltPlan(config);
 
         setResources();
 
